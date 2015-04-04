@@ -21,7 +21,7 @@ public class SendRequest {
         Integer status;
         LoLResponse loLResponse;
         // New AndroidHttpClient.
-        AndroidHttpClient client = AndroidHttpClient.newInstance("SummonersApp Agent SoloTop");
+        AndroidHttpClient client = AndroidHttpClient.newInstance("URFGamesApp Agent SoloTop");
         HttpConnectionParams.setConnectionTimeout(client.getParams(), 2500);
         HttpConnectionParams.setSoTimeout(client.getParams(), 3000);
         try {
@@ -29,16 +29,12 @@ public class SendRequest {
             status = response.getStatusLine().getStatusCode();
             if (status == 200)
                 loLResponse = new LoLResponse(
-                        new JSONObject(EntityUtils.toString(response.getEntity())),
+                        EntityUtils.toString(response.getEntity()),
                         200,
                         null);
             else
                 loLResponse = new LoLResponse(null, status, null);
-        } catch (IOException e) {
-            Logger.appendLog("Code 01 - SendRequest:" + e.toString());
-            loLResponse = new LoLResponse(null, -2, e.toString());
         } catch (Exception e) {
-            Logger.appendLog("Code 02 - SendRequest:" + e.toString());
             loLResponse = new LoLResponse(null, -1, e.toString());
         }
         client.close();

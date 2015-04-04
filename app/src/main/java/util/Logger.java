@@ -24,7 +24,7 @@ public class Logger {
             String dir = Environment.getExternalStorageDirectory() + File.separator + "logs";
             File folder = new File(dir); //folder name
             folder.mkdirs();
-            logFile = new File(dir, "SummonersLog2.txt");
+            logFile = new File(dir, "URFGamesAppLog.txt");
         }
         try {
 
@@ -39,7 +39,7 @@ public class Logger {
             buf.newLine();
             buf.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e("Error", e.toString());
         }
     }
 }

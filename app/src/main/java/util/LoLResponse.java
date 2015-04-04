@@ -10,14 +10,14 @@ import org.json.JSONObject;
 // - The error (in case of Java errors).
 
 public class LoLResponse {
-    private JSONObject jsonObject;
+    private String jsonObject;
     private int status;
     private String error;
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
     // Constructor.
-    public LoLResponse(JSONObject jsonObject, int status, String error) {
+    public LoLResponse(String jsonObject, int status, String error) {
         this.jsonObject = jsonObject;
         this.status = status;
         this.error = error;
@@ -26,7 +26,7 @@ public class LoLResponse {
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
     // Getters.
-    public JSONObject getJsonObject() {
+    public String getJsonString() {
         return this.jsonObject;
     }
 
