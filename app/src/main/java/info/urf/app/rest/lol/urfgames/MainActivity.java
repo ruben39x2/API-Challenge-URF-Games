@@ -196,11 +196,11 @@ public class MainActivity extends ActionBarActivity {
     // Shows a dialog with "about the app" info.
     private void showAbout(){
         AlertDialog.Builder aboutDialog = new AlertDialog.Builder(context);
-        aboutDialog.setTitle("About the app")
+        aboutDialog.setTitle(getString(R.string.about_the_app))
                 .setIcon(R.mipmap.ic_launcher)
-                .setMessage("About")
+                .setMessage(getString(R.string.about))
                 .setCancelable(false)
-                .setPositiveButton("Ok, cool", new DialogInterface.OnClickListener() {
+                .setPositiveButton(getString(R.string.ok_cool), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                     }
                 });
@@ -215,7 +215,7 @@ public class MainActivity extends ActionBarActivity {
             loadRecentURFGames();
         else
             Toast.makeText(getApplicationContext(),
-                    "More games cannot be loaded now!",
+                    getString(R.string.more_games_cannot_be_loaded_now),
                     Toast.LENGTH_LONG).show();
     }
 
@@ -236,7 +236,7 @@ public class MainActivity extends ActionBarActivity {
             TextView tV2 = (TextView) findViewById(R.id.textViewTitle);
 
             pB.setVisibility(View.VISIBLE);
-            tV.setText("Loading recent URF games...");
+            tV.setText(getString(R.string.loading_recent));
             tV2.setVisibility(View.INVISIBLE);
 
             setCanLoadMoreGames(false);
@@ -278,13 +278,12 @@ public class MainActivity extends ActionBarActivity {
                 // Send the petition.
                 String request = "https://" + REGION + ".api.pvp.net/api/lol/" +
                         REGION + "/v4.1/game/ids?beginDate=" + beginDate + "&api_key=" + APIKey.KEY;
-                Log.d("REQUEST", request);
                 loLResponse = SendRequest.get(request);
 
                 // Check the result of the petition.
                 switch (loLResponse.getStatus()) {
                     case -1: {
-                        publishProgress("Connection error");
+                        publishProgress(getString(R.string.connection_error));
                         Logger.appendLog("Error 01 - " + loLResponse.getError());
                         return null;
                     }
@@ -293,33 +292,33 @@ public class MainActivity extends ActionBarActivity {
                         break;
                     }
                     case 400: {
-                        publishProgress("Bad request");
+                        publishProgress(getString(R.string.bad_request));
                         Logger.appendLog("Error 02 - Bad request");
                         return null;
                     }
                     case 404: {
-                        publishProgress("There were no URF games in " + (minutesToBack + 5) + " minutes\nLoading 5 minutes more...");
+                        publishProgress(getString(R.string.there_were_no_games_in) + " " + (minutesToBack + 5) + " " + getString(R.string.minutes_loading_5_minutes_more));
                         setMinutesToBack(minutesToBack + 5);
                         Logger.appendLog("Error 03 - 404 Not Found");
                         break;
                     }
                     case 429: {
-                        publishProgress("Rate limit exceeded");
+                        publishProgress(getString(R.string.rate_limit_exceeded));
                         Logger.appendLog("Error 04 - Rate limit exceeded");
                         return null;
                     }
                     case 500: {
-                        publishProgress("Internal server error");
+                        publishProgress(getString(R.string.internal_server));
                         Logger.appendLog("Error 05 - Internal server error");
                         return null;
                     }
                     case 503: {
-                        publishProgress("Service unavailable");
+                        publishProgress(getString(R.string.service_unavailable));
                         Logger.appendLog("Error 06 - Service unavailable");
                         return null;
                     }
                     default: {
-                        publishProgress("Unknown error");
+                        publishProgress(getString(R.string.unknown_error));
                         Logger.appendLog("Error 07 - Unknown error - Status line: " + loLResponse.getStatus());
                         return null;
                     }
@@ -339,7 +338,7 @@ public class MainActivity extends ActionBarActivity {
                 return gamesId;
             } catch (JSONException e) {
                 Logger.appendLog("Error 08 - Unknown error" + e.toString());
-                publishProgress("An error that should never happen has happened :)");
+                publishProgress(getString(R.string.wtf_this_should_never_happen));
                 return null;
             }
         }
