@@ -18,4 +18,9 @@
     <string name="service_unavailable">Service unavailable</string>
     <string name="unknown_error">Unknown error</string>
     <string name="wtf_this_should_never_happen">An error that should never happen has happened :)</string>
+    <string name="started_over">"Started over "</string>
+    <string name="minutes_ago">minutes ago</string>
+    <string name="game_id">Game ID:</string>
+    <string name="urf">Ultra Rapid Fire</string>
+    <string name="title_activity_match_data">MatchDataActivity</string>
 </resources>
