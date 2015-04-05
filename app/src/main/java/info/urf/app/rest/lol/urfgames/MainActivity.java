@@ -441,7 +441,7 @@ public class MainActivity extends ActionBarActivity {
             new Thread.UncaughtExceptionHandler() {
                 @Override
                 public void uncaughtException(Thread thread, Throwable ex) {
-                    String error = "-----------------------------------------\nFATAL - Black Code: An unhandled exception has occurred!\n";
+                    String error = "-----------------------------------------\nFATAL: An unhandled exception has occurred!\n";
                     error += "Reason of the error: " + ex.getMessage() + "\nTRACE:\n";
                     StackTraceElement[] trace = ex.getStackTrace();
                     for (StackTraceElement aTrace : trace) error += aTrace.toString() + "\n";

@@ -24,5 +24,20 @@
     <string name="urf">Ultra Rapid Fire</string>
     <string name="title_activity_match_data">MatchDataActivity</string>
     <string name="loading_data">Loading data...</string>
-    <string name="loading_names">Loading names...</string>
+    <string name="loading_champs">Loading champions...</string>
+    <string name="not_found">Not found</string>
+    <string name="loading_images">Loading images... (</string>
+    <string name="something_went_wrong">Something went wrong! :(</string>
+    <string name="unknown_duration">Unknown duration</string>
+    <string name="unknown">Unknown</string>
+    <string name="unranked">Unranked</string>
+    <string name="bronze">Bronze</string>
+    <string name="silver">Silver</string>
+    <string name="gold">Gold</string>
+    <string name="platinum">Platinum</string>
+    <string name="diamond">Diamond</string>
+    <string name="master">Master</string>
+    <string name="challenger">Challenger</string>
+    <string name="victory">Victory</string>
+    <string name="defeat">Defeat</string>
 </resources>
