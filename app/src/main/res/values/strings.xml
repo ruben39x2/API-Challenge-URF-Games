@@ -23,4 +23,6 @@
     <string name="game_id">Game ID:</string>
     <string name="urf">Ultra Rapid Fire</string>
     <string name="title_activity_match_data">MatchDataActivity</string>
+    <string name="loading_data">Loading data...</string>
+    <string name="loading_names">Loading names...</string>
 </resources>
