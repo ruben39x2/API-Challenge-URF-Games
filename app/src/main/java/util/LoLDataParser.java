@@ -22,7 +22,15 @@ public class LoLDataParser {
             matchDuration = match.getLong("matchDuration");
             Long minutes = matchDuration / 60;
             Long seconds = matchDuration % 60;
-            duration = minutes + ":" + seconds;
+
+            // This is made in order to get "23:07" instead of "23:7"
+            String secondsStr;
+            if (seconds.toString().length() == 1)
+                secondsStr = "0" + seconds.toString();
+            else
+                secondsStr = seconds.toString();
+
+            duration = context.getString(R.string.duration) + " " + minutes + ":" + secondsStr;
         } catch (JSONException e) {
             duration = context.getString(R.string.unknown_duration);
             Logger.appendLog("Error 24 - " + e.toString());

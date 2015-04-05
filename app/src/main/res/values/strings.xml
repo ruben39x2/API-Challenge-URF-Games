@@ -6,7 +6,7 @@
     <string name="recent_games">Recent games</string>
     <string name="about_the_app">About the app</string>
     <string name="about">This app allows to see the info of recent URF games in your region! Enjoy!</string>
-    <string name="ok_cool">Ok, cool</string>
+    <string name="ok_cool">OK, cool</string>
     <string name="more_games_cannot_be_loaded_now">More games cannot be loaded now!</string>
     <string name="loading_recent">Loading recent URF games...</string>
     <string name="connection_error">Connection error</string>
@@ -22,7 +22,7 @@
     <string name="minutes_ago">minutes ago</string>
     <string name="game_id">Game ID:</string>
     <string name="urf">Ultra Rapid Fire</string>
-    <string name="title_activity_match_data">MatchDataActivity</string>
+    <string name="title_activity_match_data">URF Games</string>
     <string name="loading_data">Loading data...</string>
     <string name="loading_champs">Loading champions...</string>
     <string name="not_found">Not found</string>
@@ -40,4 +40,15 @@
     <string name="challenger">Challenger</string>
     <string name="victory">Victory</string>
     <string name="defeat">Defeat</string>
+
+    <string name="title_section1">Section 1</string>
+    <string name="title_section2">Section 2</string>
+    <string name="title_section3">Section 3</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_example">Example action</string>
+    <string name="title_activity_details">DetailsActivity</string>
+    <string name="duration">Duration:</string>
 </resources>

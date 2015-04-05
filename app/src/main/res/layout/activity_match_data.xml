@@ -60,11 +60,12 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/textViewTeam100Result"
                 android:layout_below="@+id/textViewMatchSubtitle"
+                android:textAppearance="?android:attr/textAppearanceMedium"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_marginTop="5dp"
-                android:layout_marginLeft="3dp"
-                android:layout_marginStart="3dp"
+                android:layout_marginLeft="6dp"
+                android:layout_marginStart="6dp"
                 android:textStyle="bold" />
 
             <ImageButton
@@ -74,7 +75,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_below="@id/textViewTeam100Result"
-                android:layout_marginTop="6dp"
+                android:layout_marginTop="3dp"
                 android:visibility="invisible"
                 android:onClick="onClickDetails" />
 
@@ -110,7 +111,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_below="@id/imageButton101"
-                android:layout_marginTop="6dp"
+                android:layout_marginTop="3dp"
                 android:visibility="invisible"
                 android:onClick="onClickDetails" />
 
@@ -146,7 +147,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_below="@id/imageButton102"
-                android:layout_marginTop="6dp"
+                android:layout_marginTop="3dp"
                 android:visibility="invisible"
                 android:onClick="onClickDetails" />
 
@@ -182,7 +183,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_below="@id/imageButton103"
-                android:layout_marginTop="6dp"
+                android:layout_marginTop="3dp"
                 android:visibility="invisible"
                 android:onClick="onClickDetails" />
 
@@ -218,7 +219,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_below="@id/imageButton104"
-                android:layout_marginTop="6dp"
+                android:layout_marginTop="3dp"
                 android:visibility="invisible"
                 android:onClick="onClickDetails" />
 
@@ -253,11 +254,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/textViewTeam200Result"
+                android:textAppearance="?android:attr/textAppearanceMedium"
                 android:layout_below="@+id/textViewMatchSubtitle"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
-                android:layout_marginRight="3dp"
-                android:layout_marginEnd="3dp"
+                android:layout_marginRight="6dp"
+                android:layout_marginEnd="6dp"
                 android:layout_marginTop="5dp"
                 android:textStyle="bold" />
 
@@ -268,7 +270,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
                 android:layout_below="@id/textViewTeam200Result"
-                android:layout_marginTop="6dp"
+                android:layout_marginTop="3dp"
                 android:visibility="invisible"
                 android:onClick="onClickDetails" />
 
@@ -304,7 +306,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
                 android:layout_below="@id/imageButton201"
-                android:layout_marginTop="6dp"
+                android:layout_marginTop="3dp"
                 android:visibility="invisible"
                 android:onClick="onClickDetails" />
 
@@ -340,7 +342,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
                 android:layout_below="@id/imageButton202"
-                android:layout_marginTop="6dp"
+                android:layout_marginTop="3dp"
                 android:visibility="invisible"
                 android:onClick="onClickDetails" />
 
@@ -376,7 +378,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
                 android:layout_below="@id/imageButton203"
-                android:layout_marginTop="6dp"
+                android:layout_marginTop="3dp"
                 android:visibility="invisible"
                 android:onClick="onClickDetails" />
 
@@ -412,7 +414,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
                 android:layout_below="@id/imageButton204"
-                android:layout_marginTop="6dp"
+                android:layout_marginTop="3dp"
                 android:visibility="invisible"
                 android:onClick="onClickDetails" />
 
@@ -449,8 +451,10 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:id="@+id/textViewVS"
                 android:layout_centerHorizontal="true"
-                android:layout_alignTop="@id/imageButton103"
-                android:textColor="#ffbba200" />
+                android:layout_below="@id/textViewMatchSubtitle"
+                android:textColor="#ff715b00"
+                android:layout_marginTop="10dp"
+                android:textStyle="bold" />
 
         </RelativeLayout>
 

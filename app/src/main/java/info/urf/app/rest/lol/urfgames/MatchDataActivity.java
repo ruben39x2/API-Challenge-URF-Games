@@ -1,6 +1,7 @@
 package info.urf.app.rest.lol.urfgames;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -9,8 +10,7 @@ import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
+
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
@@ -20,9 +20,7 @@ import android.widget.Toast;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
-import java.io.IOException;
 import java.io.InputStream;
 
 import util.APIKey;
@@ -144,7 +142,7 @@ public class MatchDataActivity extends ActionBarActivity {
         // LoLMatchData two Bitmap arrays (one for team 100 and another for team 200), and
         // get the data ordered in the asyncTask.
         // But it's not that way, so we can do this as simply as using a 10 elements array - efficient.
-        JSONArray participants = null;
+        JSONArray participants;
         try {
             participants = this.matchData.getJsonObject().getJSONArray("participants");
         } catch (JSONException e) {
@@ -401,6 +399,7 @@ public class MatchDataActivity extends ActionBarActivity {
     // onClick methods.
 
     public void onClickDetails(View v){
-
+        final Intent intent = new Intent(this, DetailsActivity.class);
+        startActivity(intent);
     }
 }
