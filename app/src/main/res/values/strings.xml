@@ -51,4 +51,21 @@
     <string name="stats">Stats</string>
     <string name="team">Team</string>
     <string name="build">Build</string>
+    <string name="contribution_for_kill">"Contribution for kill: "</string>
+    <string name="perfect_kda">perfect KDA</string>
+    <string name="kills">"Kills: "</string>
+    <string name="deaths">"Deaths: "</string>
+    <string name="assists">"Assists: "</string>
+    <string name="minions_killed">"Minions killed: "</string>
+    <string name="neutral_minions_killed">"Neutral minions killed: "</string>
+    <string name="largest_multikill">"Largest multikill: "</string>
+    <string name="largest_killing_spree">"Largest killing spree: "</string>
+    <string name="turrets_destroyed">"Turrets destroyed: "</string>
+    <string name="inhibitors_destroyed">"Inhibitors destroyed: "</string>
+    <string name="gold_earned">"Gold earned: "</string>
+    <string name="champ_level">"Champion level: "</string>
+    <string name="heal">"Total heal: "</string>
+    <string name="truedmg">"True damage dealt to champions: "</string>
+    <string name="magicdmg">"Magic damage dealt to champions: "</string>
+    <string name="physicaldmg">"Physical damage dealt to champions: "</string>
 </resources>

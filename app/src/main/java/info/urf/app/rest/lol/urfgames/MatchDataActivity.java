@@ -221,15 +221,14 @@ public class MatchDataActivity extends ActionBarActivity {
             ProgressBar pB = (ProgressBar) findViewById(R.id.progressBarMatch);
             TextView tV = (TextView) findViewById(R.id.textViewLoadMatch);
 
-            pB.setVisibility(View.INVISIBLE);
-            tV.setText("");
-
             writeActivityVariableMatchData(loLMatchData);
             if (loLMatchData == null){
                 Toast.makeText(getApplicationContext(),
                         getString(R.string.something_went_wrong),
                         Toast.LENGTH_LONG).show();
             } else {
+                pB.setVisibility(View.INVISIBLE);
+                tV.setText("");
                 setupMatchData();
             }
         }

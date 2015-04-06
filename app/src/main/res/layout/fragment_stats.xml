@@ -30,6 +30,7 @@
 
 
             <!-- TextViews for the data:
+            Contribution for kill,
             Kills,
             Deaths,
             Assists,
@@ -37,6 +38,8 @@
             Neutral minions killed,
             Largest multikill,
             Largest killing spree,
+            Tower kills,
+            Inhibitor kills,
             Gold earned,
             Champ level
             ...
@@ -46,10 +49,20 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/textViewStatsKills"
+                android:id="@+id/textViewStatsContributionForKill"
                 android:layout_below="@+id/imageViewStatsChampion"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="9dp"
+                android:layout_marginTop="10dp"
+                android:textColor="#ff000000"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textViewStatsKills"
+                android:layout_below="@+id/textViewStatsContributionForKill"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp"
                 android:textColor="#ff000000" />
 
             <TextView
@@ -103,8 +116,24 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/textViewStatsGoldEarned"
+                android:id="@+id/textViewStatsTowerKills"
                 android:layout_below="@+id/textViewStatsLargestKillingSpree"
+                android:layout_centerHorizontal="true"
+                android:textColor="#ff000000" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textViewStatsInhibitorKills"
+                android:layout_below="@+id/textViewStatsTowerKills"
+                android:layout_centerHorizontal="true"
+                android:textColor="#ff000000" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textViewStatsGoldEarned"
+                android:layout_below="@+id/textViewStatsInhibitorKills"
                 android:layout_centerHorizontal="true"
                 android:textColor="#ff000000" />
 
@@ -122,8 +151,7 @@
                 android:id="@+id/textViewStatsTotalHeal"
                 android:layout_below="@+id/textViewStatsChampLevel"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="10dp"
-                android:textColor="#ff00c500" />
+                android:textColor="#ff006500" />
 
             <TextView
                 android:layout_width="wrap_content"

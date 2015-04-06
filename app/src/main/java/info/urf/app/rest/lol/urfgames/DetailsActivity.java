@@ -88,7 +88,7 @@ public class DetailsActivity extends ActionBarActivity
                     .commit();
         if (position == 1)
             fragmentManager.beginTransaction()
-                    .replace(R.id.container, FragmentBuild.newInstance(this.icon))
+                    .replace(R.id.container, FragmentBuild.newInstance(this.icon, this.JsonParticipant))
                     .commit();
         if (position == 2)
             fragmentManager.beginTransaction()
@@ -104,7 +104,6 @@ public class DetailsActivity extends ActionBarActivity
 
     public static class FragmentStats extends Fragment {
         private final int IMAGE_SIZE = 128;
-        private final int WIDTH = 30;
 
         public static FragmentStats newInstance(byte[] icon, String jsonParticipant) {
             FragmentStats fragment = new FragmentStats();
@@ -132,6 +131,7 @@ public class DetailsActivity extends ActionBarActivity
 
             // Initialize the views.
             ImageView champIcon = (ImageView) rootView.findViewById(R.id.imageViewStatsChampion);
+            TextView tVContributionForKill = (TextView) rootView.findViewById(R.id.textViewStatsContributionForKill);
             TextView tVKills = (TextView) rootView.findViewById(R.id.textViewStatsKills);
             TextView tVDeaths = (TextView) rootView.findViewById(R.id.textViewStatsDeaths);
             TextView tVAssists = (TextView) rootView.findViewById(R.id.textViewStatsAssists);
@@ -139,6 +139,8 @@ public class DetailsActivity extends ActionBarActivity
             TextView tVNeutralMinionsKilled = (TextView) rootView.findViewById(R.id.textViewStatsNeutralMinionsKilled);
             TextView tVLargestMultikill = (TextView) rootView.findViewById(R.id.textViewStatsLargestMultiKill);
             TextView tVLargestKillingSpree = (TextView) rootView.findViewById(R.id.textViewStatsLargestKillingSpree);
+            TextView tVTowerKills = (TextView) rootView.findViewById(R.id.textViewStatsTowerKills);
+            TextView tVInhibitorKills = (TextView) rootView.findViewById(R.id.textViewStatsInhibitorKills);
             TextView tVGoldEarned = (TextView) rootView.findViewById(R.id.textViewStatsGoldEarned);
             TextView tVChampLevel = (TextView) rootView.findViewById(R.id.textViewStatsChampLevel);
             TextView tVTotalHeal = (TextView) rootView.findViewById(R.id.textViewStatsTotalHeal);
@@ -156,20 +158,24 @@ public class DetailsActivity extends ActionBarActivity
             champIcon.setImageBitmap(icon);
 
             // Set the texts.
-            tVKills.setText("Kills: " + LoLDataParser.getKills(participant));
-            tVDeaths.setText("Deaths: " + LoLDataParser.getDeaths(participant));
-            tVAssists.setText("Assists: " + LoLDataParser.getAssists(participant));
-            tVMinionsKilled.setText("Minions killed: " + LoLDataParser.getMinionsKilled(participant));
-            tVNeutralMinionsKilled.setText("Neutral minions killed: " + LoLDataParser.getNeutralMinionsKilled(participant));
-            tVLargestMultikill.setText("Largest multikill: " + LoLDataParser.getLargestMultiKill(participant));
-            tVLargestKillingSpree.setText("Largest killing spree: " + LoLDataParser.getLargestKillingSpree(participant));
-            tVGoldEarned.setText("Gold earned: " + LoLDataParser.getGoldEarned(participant));
-            tVChampLevel.setText("Champion level: " + LoLDataParser.getChampLevel(participant));
-
-            tVTotalHeal.setText("Total heal: " + LoLDataParser.getTotalHeal(participant));
-            tVTrueDamageDealtToChampions.setText("True damage dealt to champions: " + LoLDataParser.getTrueDamageDealtToChampions(participant));
-            tVMagicDamageDealtToChampions.setText("Magic damage dealt to champions: " + LoLDataParser.getMagicDamageDealtToChampions(participant));
-            tVPhysicalDamageDealtToChampions.setText("Physical damage dealt to champions: " + LoLDataParser.getPhysicalDamageDealtToChampions(participant));
+            tVContributionForKill.setText(getString(R.string.contribution_for_kill) + LoLDataParser.getContributionForKill(participant)
+                    .replace("perfect", getString(R.string.perfect_kda))
+                    .replace("unknown", getString(R.string.unknown)));
+            tVKills.setText(getString(R.string.kills) + LoLDataParser.getKills(participant));
+            tVDeaths.setText(getString(R.string.deaths) + LoLDataParser.getDeaths(participant));
+            tVAssists.setText(getString(R.string.assists) + LoLDataParser.getAssists(participant));
+            tVMinionsKilled.setText(getString(R.string.minions_killed) + LoLDataParser.getMinionsKilled(participant));
+            tVNeutralMinionsKilled.setText(getString(R.string.neutral_minions_killed) + LoLDataParser.getNeutralMinionsKilled(participant));
+            tVLargestMultikill.setText(getString(R.string.largest_multikill) + LoLDataParser.getLargestMultiKill(participant));
+            tVLargestKillingSpree.setText(getString(R.string.largest_killing_spree) + LoLDataParser.getLargestKillingSpree(participant));
+            tVTowerKills.setText(getString(R.string.turrets_destroyed) + LoLDataParser.getTowerKills(participant));
+            tVInhibitorKills.setText(getString(R.string.inhibitors_destroyed) + LoLDataParser.getInhibitorKills(participant));
+            tVGoldEarned.setText(getString(R.string.gold_earned) + LoLDataParser.getGoldEarned(participant));
+            tVChampLevel.setText(getString(R.string.champ_level) + LoLDataParser.getChampLevel(participant));
+            tVTotalHeal.setText(getString(R.string.heal) + LoLDataParser.getTotalHeal(participant));
+            tVTrueDamageDealtToChampions.setText(getString(R.string.truedmg) + LoLDataParser.getTrueDamageDealtToChampions(participant));
+            tVMagicDamageDealtToChampions.setText(getString(R.string.magicdmg) + LoLDataParser.getMagicDamageDealtToChampions(participant));
+            tVPhysicalDamageDealtToChampions.setText(getString(R.string.physicaldmg) + LoLDataParser.getPhysicalDamageDealtToChampions(participant));
 
             // Return the rootView.
             return rootView;
@@ -180,10 +186,12 @@ public class DetailsActivity extends ActionBarActivity
 
     public static class FragmentBuild extends Fragment {
         private final int IMAGE_SIZE = 128;
+        private final int MAX_ITEMS = 7;
 
-        public static FragmentBuild newInstance(byte[] icon) {
+        public static FragmentBuild newInstance(byte[] icon, String jsonParticipant) {
             FragmentBuild fragment = new FragmentBuild();
             Bundle args = new Bundle();
+            args.putString("participant", jsonParticipant);
             args.putByteArray("icon", icon);
             fragment.setArguments(args);
             return fragment;
@@ -192,9 +200,21 @@ public class DetailsActivity extends ActionBarActivity
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
+            Long[] itemsId = new Long[MAX_ITEMS];
+
+            // Initialize the json.
+            JSONObject participant;
+            try {
+                participant = new JSONObject(getArguments().getString("participant"));
+            } catch (JSONException e) {
+                Logger.appendLog("Error 33 - " + e.toString());
+                return inflater.inflate(R.layout.fragment_stats, container, false);
+            }
+
+            // Initialize the rootView.
             View rootView = inflater.inflate(R.layout.fragment_build, container, false);
 
-            // Set the things
+            // Set the image for the champion icon.
             byte [] image = getArguments().getByteArray("icon");
             Bitmap icon = null;
             if (image != null && image.length > 0) {
@@ -203,6 +223,15 @@ public class DetailsActivity extends ActionBarActivity
             icon = Bitmap.createScaledBitmap(icon, IMAGE_SIZE, IMAGE_SIZE, false);
             ImageView champIcon = (ImageView) rootView.findViewById(R.id.imageViewBuildChampion);
             champIcon.setImageBitmap(icon);
+
+
+            // Get the item IDs.
+            for (int i = 0; i<itemsId.length; i++){
+                itemsId[i] = LoLDataParser.getItemId(participant, i);
+            }
+
+            // NOW LETS USE THAT IDs TO DOWNLOAD THE IMAGES AND RULE THE WORLD
+
             return rootView;
         }
     }

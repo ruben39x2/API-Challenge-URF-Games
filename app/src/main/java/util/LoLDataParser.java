@@ -238,4 +238,63 @@ public class LoLDataParser {
             return (long) 0;
         }
     }
+
+    // Receives an object with a "participant"
+    public static Long getTowerKills(JSONObject participant){
+        try {
+            JSONObject stats = participant.getJSONObject("stats");
+            Long data = stats.getLong("towerKills");
+            return data;
+        } catch (JSONException e) {
+            return (long) 0;
+        }
+    }
+
+    // Receives an object with a "participant"
+    public static Long getInhibitorKills(JSONObject participant){
+        try {
+            JSONObject stats = participant.getJSONObject("stats");
+            Long data = stats.getLong("inhibitorKills");
+            return data;
+        } catch (JSONException e) {
+            return (long) 0;
+        }
+    }
+
+    // Receives an object with a participant information (see matchv2.2 petition), and returns the
+    // Contribution for kill.
+    public static String getContributionForKill(JSONObject participant){
+        String contribution;
+        try {
+            JSONObject stats = participant.getJSONObject("stats");
+            Long kills = stats.getLong("kills");
+            Long deaths = stats.getLong("deaths");
+            Long assists = stats.getLong("assists");
+            if (deaths == (long) 0) return "perfect";
+            Float contributionFlt = ((float) kills + (float) assists) / (float) deaths;
+            // Avoid numbers with length > 4 chars (They're not necessary)
+            String pureContribution = contributionFlt.toString();
+            if (pureContribution.length() > 4) pureContribution = pureContribution.substring(0, 3);
+            contribution = pureContribution + ":1";
+        } catch (JSONException e) {
+            contribution = "unknown";
+            Logger.appendLog("Error 32 - " + e.toString());
+        }
+        return contribution;
+    }
+
+    // Receives an object with a participant information (see matchv2.2 petition) and
+    // an item number, (0 to 6), and returns the itemId.
+    public static Long getItemId(JSONObject participant, int itemNumber){
+        String item;
+        item = "item" + ((Integer) itemNumber).toString();
+        try {
+            JSONObject stats = participant.getJSONObject("stats");
+            return stats.getLong(item);
+        } catch (JSONException e) {
+            Logger.appendLog("Error 34 - " + e.toString());
+            return (long) 0;
+        }
+    }
+
 }
