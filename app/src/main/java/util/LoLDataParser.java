@@ -96,4 +96,146 @@ public class LoLDataParser {
         }
         return 0;
     }
+
+    // Receives an object with a "participant"
+    public static Long getKills(JSONObject participant){
+        try {
+            JSONObject stats = participant.getJSONObject("stats");
+            return stats.getLong("kills");
+        } catch (JSONException e) {
+            return (long) 0;
+        }
+    }
+
+    // Receives an object with a "participant"
+    public static Long getDeaths(JSONObject participant){
+        try {
+            JSONObject stats = participant.getJSONObject("stats");
+            Long data = stats.getLong("deaths");
+            return data;
+        } catch (JSONException e) {
+            return (long) 0;
+        }
+    }
+
+    // Receives an object with a "participant"
+    public static Long getAssists(JSONObject participant){
+        try {
+            JSONObject stats = participant.getJSONObject("stats");
+            Long data = stats.getLong("assists");
+            return data;
+        } catch (JSONException e) {
+            return (long) 0;
+        }
+    }
+
+    // Receives an object with a "participant"
+    public static Long getMinionsKilled(JSONObject participant){
+        try {
+            JSONObject stats = participant.getJSONObject("stats");
+            Long data = stats.getLong("minionsKilled");
+            return data;
+        } catch (JSONException e) {
+            return (long) 0;
+        }
+    }
+
+    // Receives an object with a "participant"
+    public static Long getNeutralMinionsKilled(JSONObject participant){
+        try {
+            JSONObject stats = participant.getJSONObject("stats");
+            Long data = stats.getLong("neutralMinionsKilled");
+            return data;
+        } catch (JSONException e) {
+            return (long) 0;
+        }
+    }
+
+    // Receives an object with a "participant"
+    public static Long getLargestMultiKill(JSONObject participant){
+        try {
+            JSONObject stats = participant.getJSONObject("stats");
+            Long data = stats.getLong("largestMultiKill");
+            return data;
+        } catch (JSONException e) {
+            return (long) 0;
+        }
+    }
+
+    // Receives an object with a "participant"
+    public static Long getLargestKillingSpree(JSONObject participant){
+        try {
+            JSONObject stats = participant.getJSONObject("stats");
+            Long data = stats.getLong("largestKillingSpree");
+            return data;
+        } catch (JSONException e) {
+            return (long) 0;
+        }
+    }
+
+    // Receives an object with a "participant"
+    public static Long getGoldEarned(JSONObject participant){
+        try {
+            JSONObject stats = participant.getJSONObject("stats");
+            Long data = stats.getLong("goldEarned");
+            return data;
+        } catch (JSONException e) {
+            return (long) 0;
+        }
+    }
+
+    // Receives an object with a "participant"
+    public static Long getChampLevel(JSONObject participant){
+        try {
+            JSONObject stats = participant.getJSONObject("stats");
+            Long data = stats.getLong("champLevel");
+            return data;
+        } catch (JSONException e) {
+            return (long) 0;
+        }
+    }
+
+    // Receives an object with a "participant"
+    public static Long getTotalHeal(JSONObject participant){
+        try {
+            JSONObject stats = participant.getJSONObject("stats");
+            Long data = stats.getLong("totalHeal");
+            return data;
+        } catch (JSONException e) {
+            return (long) 0;
+        }
+    }
+
+    // Receives an object with a "participant"
+    public static Long getTrueDamageDealtToChampions(JSONObject participant){
+        try {
+            JSONObject stats = participant.getJSONObject("stats");
+            Long data = stats.getLong("trueDamageDealtToChampions");
+            return data;
+        } catch (JSONException e) {
+            return (long) 0;
+        }
+    }
+
+    // Receives an object with a "participant"
+    public static Long getMagicDamageDealtToChampions(JSONObject participant){
+        try {
+            JSONObject stats = participant.getJSONObject("stats");
+            Long data = stats.getLong("magicDamageDealtToChampions");
+            return data;
+        } catch (JSONException e) {
+            return (long) 0;
+        }
+    }
+
+    // Receives an object with a "participant"
+    public static Long getPhysicalDamageDealtToChampions(JSONObject participant){
+        try {
+            JSONObject stats = participant.getJSONObject("stats");
+            Long data = stats.getLong("physicalDamageDealtToChampions");
+            return data;
+        } catch (JSONException e) {
+            return (long) 0;
+        }
+    }
 }

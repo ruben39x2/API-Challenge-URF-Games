@@ -21,6 +21,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 
 import util.APIKey;
@@ -92,6 +93,7 @@ public class MatchDataActivity extends ActionBarActivity {
     }
 
     private void setupMatchData(){
+        final int IMAGE_SIZE = 72;
         // Initialize the views.
         TextView title = (TextView) findViewById(R.id.textViewMatchTitle);
         TextView subtitle = (TextView) findViewById(R.id.textViewMatchSubtitle);
@@ -155,8 +157,9 @@ public class MatchDataActivity extends ActionBarActivity {
         title.setText(getString(R.string.urf));
         subtitle.setText(LoLDataParser.getMatchDuration(context, this.matchData.getJsonObject()));
         for (int i = 0; i < this.matchData.getChampImages().length; i++) {
+            Bitmap image = this.matchData.getChampImages()[i];
             // Set the icons.
-            icons[i].setImageBitmap(this.matchData.getChampImages()[i]);
+            icons[i].setImageBitmap(Bitmap.createScaledBitmap(image, IMAGE_SIZE, IMAGE_SIZE, false));
             icons[i].setVisibility(View.VISIBLE);
             // Set the scores.
             try {
@@ -353,7 +356,6 @@ public class MatchDataActivity extends ActionBarActivity {
         // uses them to get the champ icons. Then, it put all together in a LoLMatchData object and returns it.
         private LoLMatchData loadIconsAndFinish(String jsonStringChampKeys, String jsonStringMatchData){
             final Integer NUM_SUMMONERS = 10;
-            final Integer IMAGE_SIZE = 72;
             String [] champKeys = new String [NUM_SUMMONERS];
             Bitmap[] champImages = new Bitmap[NUM_SUMMONERS];
             JSONObject matchData;
@@ -388,7 +390,7 @@ public class MatchDataActivity extends ActionBarActivity {
                     Logger.appendLog("Error 24 - URL error" + e.toString());
                     image = BitmapFactory.decodeResource(getResources(), R.drawable.unknown);
                 }
-                champImages[i] = Bitmap.createScaledBitmap(image, IMAGE_SIZE, IMAGE_SIZE, false);
+                champImages[i] = image;
             }
             return new LoLMatchData(matchData, champImages);
         }
@@ -399,7 +401,45 @@ public class MatchDataActivity extends ActionBarActivity {
     // onClick methods.
 
     public void onClickDetails(View v){
+        Integer[] viewsId = new Integer[]{
+                R.id.imageButton101,
+                R.id.imageButton102,
+                R.id.imageButton103,
+                R.id.imageButton104,
+                R.id.imageButton105,
+                R.id.imageButton201,
+                R.id.imageButton202,
+                R.id.imageButton203,
+                R.id.imageButton204,
+                R.id.imageButton205
+        };
         final Intent intent = new Intent(this, DetailsActivity.class);
+        try {
+            // Check what button was called.
+            for (int i = 0; i<viewsId.length; i++)
+            if (v.getId() == viewsId[i]) {
+                // Put the "participant" object
+                intent.putExtra("participant", this.matchData.getJsonObject().getJSONArray("participants").getJSONObject(i).toString());
+                // Put the champ icon.
+                ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
+                boolean success = this.matchData.getChampImages()[i].compress(Bitmap.CompressFormat.PNG, 100, byteStream);
+                if (success)
+                    intent.putExtra("icon", byteStream.toByteArray());
+                // Put the team.
+                if (i<5)
+                    intent.putExtra("team", this.matchData.getJsonObject().getJSONArray("teams").getJSONObject(0).toString());
+                else
+                    intent.putExtra("team", this.matchData.getJsonObject().getJSONArray("teams").getJSONObject(1).toString());
+                break;
+            }
+        } catch (JSONException e) {
+            Logger.appendLog("Error 30 - " + e.toString());
+            Toast.makeText(getApplicationContext(),
+                    getString(R.string.something_went_wrong),
+                    Toast.LENGTH_LONG).show();
+            return;
+        }
         startActivity(intent);
     }
 }
+

@@ -33,12 +33,25 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text=" "
+        android:id="@+id/textViewRegion"
+        android:layout_below="@id/textViewTitle"
+        android:layout_marginTop="5dp"
+        android:layout_centerHorizontal="true"
+        android:textStyle="bold"
+        android:textColor="#ff000000" />
+
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/listViewGames"
         android:layout_centerHorizontal="true"
-        android:layout_below="@id/textViewLoadGamesProgress"
+        android:layout_below="@id/textViewRegion"
+        android:layout_marginTop="2dp"
         android:background="@android:color/transparent"
         android:cacheColorHint="@android:color/transparent" />
 

@@ -26,6 +26,7 @@
         <activity
             android:name=".DetailsActivity"
             android:label="@string/title_activity_details" >
+
         </activity>
     </application>
 

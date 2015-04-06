@@ -67,6 +67,10 @@ public class MainActivity extends ActionBarActivity {
         // Load the region.
         getRegionFromPreferences();
 
+        // Set the text of the region.
+        TextView tVRegion = (TextView) findViewById(R.id.textViewRegion);
+        tVRegion.setText(this.REGION.toUpperCase());
+
         // Check if the activity was restored.
         if (savedInstanceState != null){
             this.minutesToBack = savedInstanceState.getInt("minutesToBack");
@@ -209,16 +213,22 @@ public class MainActivity extends ActionBarActivity {
                         editor.putString("region", items[item]);
                         editor.commit();
 
+                        // Set the textViewRegion.
+                        TextView tVRegion = (TextView) findViewById(R.id.textViewRegion);
+                        tVRegion.setText(items[item]);
+
                         // Actualize the variable and delete the list.
                         getRegionFromPreferences();
                         clearActivityVariableRecentGames();
                         actualizeGamesList();
 
+                        // Restart the "minutesToBack" variable.
+                        setMinutesToBack(0);
+
                         // Also restart the load of games.
                         loadRecentURFGames();
                     }
                 });
-
         builder.create().show();
     }
 
@@ -327,7 +337,7 @@ public class MainActivity extends ActionBarActivity {
                         return null;
                     }
                     case 404: {
-                        publishProgress(getString(R.string.there_were_no_games_in) + " " + (minutesToBack + 5) + " " + getString(R.string.minutes_loading_5_minutes_more));
+                        publishProgress(getString(R.string.there_were_no_games_in) + (minutesToBack + 5) + " " + getString(R.string.minutes));
                         setMinutesToBack(minutesToBack + 5);
                         Logger.appendLog("Error 03 - 404 Not Found");
                         break;
@@ -379,16 +389,16 @@ public class MainActivity extends ActionBarActivity {
         private String getCurrentValidDate(int backMinutes){
             Date currentDate = new Date();
             Integer minutes = currentDate.getMinutes();
-            // This two operations are not stupid! Remember we are working with integers!
-            minutes = minutes / 5;
-            minutes = minutes * 5;
+            // Now we make the minutes to be multiplicative by 5.
+            minutes = minutes - (minutes % 5);
+            // Adapt the date.
             currentDate.setSeconds(0);
             currentDate.setMinutes(minutes-backMinutes);
             Long currentDateLong = currentDate.getTime();
             String currentDateStr = currentDateLong.toString();
 
-            return currentDateStr.substring(0, currentDateStr.length()-3);
-        };
+            return currentDateStr.substring(0, currentDateStr.length()-3); // We remove the 3 last characters
+        };                                                                 // to convert milliseconds to seconds.
     }
 
     // Subclass for the custom listView.
@@ -413,6 +423,7 @@ public class MainActivity extends ActionBarActivity {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
+            Integer pos = position + 1 ;
             LayoutInflater inflater = getLayoutInflater();
             View row;
             row = inflater.inflate(R.layout.urf_game_item, parent, false);
@@ -423,8 +434,8 @@ public class MainActivity extends ActionBarActivity {
             //Set the data.
             // Now we obtain a string array with [0] = gameId and [1] = started ... minutes ago
             String [] itemData = getActivityVariableRecentGames().get(position).split(" ");
-            title.setText(getString(R.string.urf));
-            sub1.setText(getString(R.string.started_over) + " " + itemData[1] + " " + getString(R.string.minutes_ago));
+            title.setText(pos.toString() + ": " + getString(R.string.urf));
+            sub1.setText(getString(R.string.started_over) + itemData[1] + getString(R.string.minutes_ago));
             sub2.setText(getString(R.string.game_id) + " " + itemData[0]);
             return row;
         }
