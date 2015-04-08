@@ -15,7 +15,7 @@ import info.urf.app.rest.lol.urfgames.R;
 public class LoLDataParser {
 
     // Receives an object with the result of a matchv2.2 petition, and returns the duration.
-    public static String getMatchDuration(Context context, JSONObject match){
+    public static String getMatchDuration(Context context, JSONObject match) {
         Long matchDuration;
         String duration;
         try {
@@ -39,7 +39,7 @@ public class LoLDataParser {
     }
 
     // Receives an object with a participant information (see matchv2.2 petition), and returns the KDA.
-    public static String getKDA(Context context, JSONObject participant){
+    public static String getKDA(Context context, JSONObject participant) {
         String KDA;
         try {
             JSONObject stats = participant.getJSONObject("stats");
@@ -56,7 +56,7 @@ public class LoLDataParser {
 
     // Receives an object with a participant information (see matchv2.2 petition), and returns the
     // Highest League Achieved.
-    public static String getLeague(Context context, JSONObject participant){
+    public static String getLeague(Context context, JSONObject participant) {
         try {
             String leagueValue = participant.getString("highestAchievedSeasonTier");
             if (leagueValue.equals("UNRANKED")) return context.getString(R.string.unranked);
@@ -75,7 +75,7 @@ public class LoLDataParser {
     }
 
     // Receives an object with the result of a matchv2.2 petition, and returns the winner team 100 or 200.
-    public static int getWinnerTeam(JSONObject match){
+    public static int getWinnerTeam(JSONObject match) {
         JSONArray teams = null;
         try {
             teams = match.getJSONArray("teams");
@@ -98,7 +98,7 @@ public class LoLDataParser {
     }
 
     // Receives an object with a "participant"
-    public static Long getKills(JSONObject participant){
+    public static Long getKills(JSONObject participant) {
         try {
             JSONObject stats = participant.getJSONObject("stats");
             return stats.getLong("kills");
@@ -108,7 +108,7 @@ public class LoLDataParser {
     }
 
     // Receives an object with a "participant"
-    public static Long getDeaths(JSONObject participant){
+    public static Long getDeaths(JSONObject participant) {
         try {
             JSONObject stats = participant.getJSONObject("stats");
             Long data = stats.getLong("deaths");
@@ -119,7 +119,7 @@ public class LoLDataParser {
     }
 
     // Receives an object with a "participant"
-    public static Long getAssists(JSONObject participant){
+    public static Long getAssists(JSONObject participant) {
         try {
             JSONObject stats = participant.getJSONObject("stats");
             Long data = stats.getLong("assists");
@@ -130,7 +130,7 @@ public class LoLDataParser {
     }
 
     // Receives an object with a "participant"
-    public static Long getMinionsKilled(JSONObject participant){
+    public static Long getMinionsKilled(JSONObject participant) {
         try {
             JSONObject stats = participant.getJSONObject("stats");
             Long data = stats.getLong("minionsKilled");
@@ -141,7 +141,7 @@ public class LoLDataParser {
     }
 
     // Receives an object with a "participant"
-    public static Long getNeutralMinionsKilled(JSONObject participant){
+    public static Long getNeutralMinionsKilled(JSONObject participant) {
         try {
             JSONObject stats = participant.getJSONObject("stats");
             Long data = stats.getLong("neutralMinionsKilled");
@@ -152,7 +152,7 @@ public class LoLDataParser {
     }
 
     // Receives an object with a "participant"
-    public static Long getLargestMultiKill(JSONObject participant){
+    public static Long getLargestMultiKill(JSONObject participant) {
         try {
             JSONObject stats = participant.getJSONObject("stats");
             Long data = stats.getLong("largestMultiKill");
@@ -163,7 +163,7 @@ public class LoLDataParser {
     }
 
     // Receives an object with a "participant"
-    public static Long getLargestKillingSpree(JSONObject participant){
+    public static Long getLargestKillingSpree(JSONObject participant) {
         try {
             JSONObject stats = participant.getJSONObject("stats");
             Long data = stats.getLong("largestKillingSpree");
@@ -174,7 +174,7 @@ public class LoLDataParser {
     }
 
     // Receives an object with a "participant"
-    public static Long getGoldEarned(JSONObject participant){
+    public static Long getGoldEarned(JSONObject participant) {
         try {
             JSONObject stats = participant.getJSONObject("stats");
             Long data = stats.getLong("goldEarned");
@@ -185,7 +185,7 @@ public class LoLDataParser {
     }
 
     // Receives an object with a "participant"
-    public static Long getChampLevel(JSONObject participant){
+    public static Long getChampLevel(JSONObject participant) {
         try {
             JSONObject stats = participant.getJSONObject("stats");
             Long data = stats.getLong("champLevel");
@@ -196,7 +196,7 @@ public class LoLDataParser {
     }
 
     // Receives an object with a "participant"
-    public static Long getTotalHeal(JSONObject participant){
+    public static Long getTotalHeal(JSONObject participant) {
         try {
             JSONObject stats = participant.getJSONObject("stats");
             Long data = stats.getLong("totalHeal");
@@ -207,7 +207,7 @@ public class LoLDataParser {
     }
 
     // Receives an object with a "participant"
-    public static Long getTrueDamageDealtToChampions(JSONObject participant){
+    public static Long getTrueDamageDealtToChampions(JSONObject participant) {
         try {
             JSONObject stats = participant.getJSONObject("stats");
             Long data = stats.getLong("trueDamageDealtToChampions");
@@ -218,7 +218,7 @@ public class LoLDataParser {
     }
 
     // Receives an object with a "participant"
-    public static Long getMagicDamageDealtToChampions(JSONObject participant){
+    public static Long getMagicDamageDealtToChampions(JSONObject participant) {
         try {
             JSONObject stats = participant.getJSONObject("stats");
             Long data = stats.getLong("magicDamageDealtToChampions");
@@ -229,7 +229,7 @@ public class LoLDataParser {
     }
 
     // Receives an object with a "participant"
-    public static Long getPhysicalDamageDealtToChampions(JSONObject participant){
+    public static Long getPhysicalDamageDealtToChampions(JSONObject participant) {
         try {
             JSONObject stats = participant.getJSONObject("stats");
             Long data = stats.getLong("physicalDamageDealtToChampions");
@@ -240,7 +240,7 @@ public class LoLDataParser {
     }
 
     // Receives an object with a "participant"
-    public static Long getTowerKills(JSONObject participant){
+    public static Long getTowerKills(JSONObject participant) {
         try {
             JSONObject stats = participant.getJSONObject("stats");
             Long data = stats.getLong("towerKills");
@@ -251,7 +251,7 @@ public class LoLDataParser {
     }
 
     // Receives an object with a "participant"
-    public static Long getInhibitorKills(JSONObject participant){
+    public static Long getInhibitorKills(JSONObject participant) {
         try {
             JSONObject stats = participant.getJSONObject("stats");
             Long data = stats.getLong("inhibitorKills");
@@ -263,7 +263,7 @@ public class LoLDataParser {
 
     // Receives an object with a participant information (see matchv2.2 petition), and returns the
     // Contribution for kill.
-    public static String getContributionForKill(JSONObject participant){
+    public static String getContributionForKill(JSONObject participant) {
         String contribution;
         try {
             JSONObject stats = participant.getJSONObject("stats");
@@ -285,7 +285,7 @@ public class LoLDataParser {
 
     // Receives an object with a participant information (see matchv2.2 petition) and
     // an item number, (0 to 6), and returns the itemId.
-    public static Long getItemId(JSONObject participant, int itemNumber){
+    public static Long getItemId(JSONObject participant, int itemNumber) {
         String item;
         item = "item" + ((Integer) itemNumber).toString();
         try {
@@ -298,7 +298,7 @@ public class LoLDataParser {
     }
 
     // Receives an object with the team info.
-    public static boolean getFirstBlood(JSONObject team){
+    public static boolean getFirstBlood(JSONObject team) {
         try {
             return team.getBoolean("firstBlood");
         } catch (JSONException e) {
@@ -308,7 +308,7 @@ public class LoLDataParser {
     }
 
     // Receives an object with the team info.
-    public static boolean getFirstTower(JSONObject team){
+    public static boolean getFirstTower(JSONObject team) {
         try {
             return team.getBoolean("firstTower");
         } catch (JSONException e) {
@@ -318,7 +318,7 @@ public class LoLDataParser {
     }
 
     // Receives an object with the team info.
-    public static boolean getFirstBaron(JSONObject team){
+    public static boolean getFirstBaron(JSONObject team) {
         try {
             return team.getBoolean("firstBaron");
         } catch (JSONException e) {
@@ -328,7 +328,7 @@ public class LoLDataParser {
     }
 
     // Receives an object with the team info.
-    public static boolean getFirstDragon(JSONObject team){
+    public static boolean getFirstDragon(JSONObject team) {
         try {
             return team.getBoolean("firstDragon");
         } catch (JSONException e) {
@@ -338,7 +338,7 @@ public class LoLDataParser {
     }
 
     // Receives an object with the team info.
-    public static boolean getFirstInhibitor(JSONObject team){
+    public static boolean getFirstInhibitor(JSONObject team) {
         try {
             return team.getBoolean("firstInhibitor");
         } catch (JSONException e) {
@@ -348,7 +348,7 @@ public class LoLDataParser {
     }
 
     // Receives an object with the team info.
-    public static Integer getTeamTowerKills(JSONObject team){
+    public static Integer getTeamTowerKills(JSONObject team) {
         try {
             return team.getInt("towerKills");
         } catch (JSONException e) {
@@ -358,7 +358,7 @@ public class LoLDataParser {
     }
 
     // Receives an object with the team info.
-    public static Integer getTeamInhibitorKills(JSONObject team){
+    public static Integer getTeamInhibitorKills(JSONObject team) {
         try {
             return team.getInt("inhibitorKills");
         } catch (JSONException e) {
@@ -368,7 +368,7 @@ public class LoLDataParser {
     }
 
     // Receives an object with the team info.
-    public static Integer getTeamDragonKills(JSONObject team){
+    public static Integer getTeamDragonKills(JSONObject team) {
         try {
             return team.getInt("dragonKills");
         } catch (JSONException e) {
@@ -378,7 +378,7 @@ public class LoLDataParser {
     }
 
     // Receives an object with the team info.
-    public static Integer getTeamBaronKills(JSONObject team){
+    public static Integer getTeamBaronKills(JSONObject team) {
         try {
             return team.getInt("baronKills");
         } catch (JSONException e) {
@@ -388,7 +388,7 @@ public class LoLDataParser {
     }
 
     // Receives an object with the team info.
-    public static Boolean getTeamWinner(JSONObject team){
+    public static Boolean getTeamWinner(JSONObject team) {
         try {
             return team.getBoolean("winner");
         } catch (JSONException e) {
@@ -398,7 +398,7 @@ public class LoLDataParser {
     }
 
     // Receives an object with the team info.
-    public static Integer getTeamId(JSONObject team){
+    public static Integer getTeamId(JSONObject team) {
         try {
             return team.getInt("teamId");
         } catch (JSONException e) {

@@ -1,7 +1,5 @@
 package util;
 
-import org.json.JSONObject;
-
 // LoLResponse.java
 
 // Java object containing the info of a request send to the Riot server.

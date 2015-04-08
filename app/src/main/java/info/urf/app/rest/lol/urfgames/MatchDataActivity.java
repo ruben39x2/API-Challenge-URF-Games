@@ -7,10 +7,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.AsyncTask;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
-
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
@@ -41,10 +40,11 @@ public class MatchDataActivity extends ActionBarActivity {
     private LoLMatchData matchData = null;
     private String REGION = "euw";
 
-    /**********************************************************************************************/
+    /**
+     * ******************************************************************************************
+     */
 
     // Methods overrided from the superclass.
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,24 +76,25 @@ public class MatchDataActivity extends ActionBarActivity {
         if (this.matchData != null) outState.putSerializable("matchData", this.matchData);
     }
 
-    /**********************************************************************************************/
+    /**
+     * ******************************************************************************************
+     */
 
     // Private methods.
-
-    private void loadMatchInfo(String matchId){
+    private void loadMatchInfo(String matchId) {
         new LoadMatchTask().execute(matchId);
     }
 
-    private void writeActivityVariableMatchData(LoLMatchData loLMatchData){
+    private void writeActivityVariableMatchData(LoLMatchData loLMatchData) {
         this.matchData = loLMatchData;
     }
 
-    private void getRegionFromPreferences(){
+    private void getRegionFromPreferences() {
         SharedPreferences prefs = getSharedPreferences("URFGames", MODE_PRIVATE);
         this.REGION = prefs.getString("region", "EUW").toLowerCase();
     }
 
-    private void setupMatchData(){
+    private void setupMatchData() {
         final int IMAGE_SIZE = 72;
         // Initialize the views.
         TextView title = (TextView) findViewById(R.id.textViewMatchTitle);
@@ -101,7 +102,7 @@ public class MatchDataActivity extends ActionBarActivity {
         TextView textVS = (TextView) findViewById(R.id.textViewVS);
         TextView team100result = (TextView) findViewById(R.id.textViewTeam100Result);
         TextView team200result = (TextView) findViewById(R.id.textViewTeam200Result);
-        ImageButton [] icons = new ImageButton[]{
+        ImageButton[] icons = new ImageButton[]{
                 (ImageButton) findViewById(R.id.imageButton101),
                 (ImageButton) findViewById(R.id.imageButton102),
                 (ImageButton) findViewById(R.id.imageButton103),
@@ -113,7 +114,7 @@ public class MatchDataActivity extends ActionBarActivity {
                 (ImageButton) findViewById(R.id.imageButton204),
                 (ImageButton) findViewById(R.id.imageButton205)
         };
-        TextView [] scores = new TextView[]{
+        TextView[] scores = new TextView[]{
                 (TextView) findViewById(R.id.textViewScore101),
                 (TextView) findViewById(R.id.textViewScore102),
                 (TextView) findViewById(R.id.textViewScore103),
@@ -125,7 +126,7 @@ public class MatchDataActivity extends ActionBarActivity {
                 (TextView) findViewById(R.id.textViewScore204),
                 (TextView) findViewById(R.id.textViewScore205)
         };
-        TextView [] leagues = new TextView [] {
+        TextView[] leagues = new TextView[]{
                 (TextView) findViewById(R.id.textViewLeague101),
                 (TextView) findViewById(R.id.textViewLeague102),
                 (TextView) findViewById(R.id.textViewLeague103),
@@ -178,33 +179,80 @@ public class MatchDataActivity extends ActionBarActivity {
             }
         }
         // And the texts "victory" and "defeat"
-        if (LoLDataParser.getWinnerTeam(this.matchData.getJsonObject()) == 100){
+        if (LoLDataParser.getWinnerTeam(this.matchData.getJsonObject()) == 100) {
             team100result.setText(getString(R.string.victory));
             team200result.setText(getString(R.string.defeat));
             team100result.setTextColor(Color.rgb(30, 240, 20));
             team200result.setTextColor(Color.rgb(240, 30, 20));
-        } else
-            if (LoLDataParser.getWinnerTeam(this.matchData.getJsonObject()) == 200) {
-                team100result.setText(getString(R.string.defeat));
-                team200result.setText(getString(R.string.victory));
-                team100result.setTextColor(Color.rgb(240, 30, 20));
-                team200result.setTextColor(Color.rgb(30, 240, 20));
-            } else { // Something did not work ok... :(
-                team100result.setText(getString(R.string.unknown));
-                team200result.setText(getString(R.string.unknown));
-            }
+        } else if (LoLDataParser.getWinnerTeam(this.matchData.getJsonObject()) == 200) {
+            team100result.setText(getString(R.string.defeat));
+            team200result.setText(getString(R.string.victory));
+            team100result.setTextColor(Color.rgb(240, 30, 20));
+            team200result.setTextColor(Color.rgb(30, 240, 20));
+        } else { // Something did not work ok... :(
+            team100result.setText(getString(R.string.unknown));
+            team200result.setText(getString(R.string.unknown));
+        }
         // And the text for "V.S."
         textVS.setText("VS");
     }
 
+    /**
+     * ******************************************************************************************
+     */
 
-    /**********************************************************************************************/
+    // onClick methods.
+    public void onClickDetails(View v) {
+        Integer[] viewsId = new Integer[]{
+                R.id.imageButton101,
+                R.id.imageButton102,
+                R.id.imageButton103,
+                R.id.imageButton104,
+                R.id.imageButton105,
+                R.id.imageButton201,
+                R.id.imageButton202,
+                R.id.imageButton203,
+                R.id.imageButton204,
+                R.id.imageButton205
+        };
+        final Intent intent = new Intent(this, DetailsActivity.class);
+        try {
+            // Check what button was called.
+            for (int i = 0; i < viewsId.length; i++)
+                if (v.getId() == viewsId[i]) {
+                    // Put the "participant" object
+                    intent.putExtra("participant", this.matchData.getJsonObject().getJSONArray("participants").getJSONObject(i).toString());
+                    // Put the champ icon.
+                    ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
+                    boolean success = this.matchData.getChampImages()[i].compress(Bitmap.CompressFormat.PNG, 100, byteStream);
+                    if (success)
+                        intent.putExtra("icon", byteStream.toByteArray());
+                    // Put the team.
+                    if (i < 5)
+                        intent.putExtra("team", this.matchData.getJsonObject().getJSONArray("teams").getJSONObject(0).toString());
+                    else
+                        intent.putExtra("team", this.matchData.getJsonObject().getJSONArray("teams").getJSONObject(1).toString());
+                    break;
+                }
+        } catch (JSONException e) {
+            Logger.appendLog("Error 30 - " + e.toString());
+            Toast.makeText(getApplicationContext(),
+                    getString(R.string.something_went_wrong),
+                    Toast.LENGTH_LONG).show();
+            return;
+        }
+        startActivity(intent);
+    }
+
+    /**
+     * ******************************************************************************************
+     */
 
     // Subclasses.
 
     // AsyncTask that will load asynchronously the game data (and champ icons).
 
-    private class LoadMatchTask extends AsyncTask<String, String, LoLMatchData>{
+    private class LoadMatchTask extends AsyncTask<String, String, LoLMatchData> {
 
         @Override
         protected void onPreExecute() {
@@ -223,7 +271,7 @@ public class MatchDataActivity extends ActionBarActivity {
             TextView tV = (TextView) findViewById(R.id.textViewLoadMatch);
 
             writeActivityVariableMatchData(loLMatchData);
-            if (loLMatchData == null){
+            if (loLMatchData == null) {
                 Toast.makeText(getApplicationContext(),
                         getString(R.string.something_went_wrong),
                         Toast.LENGTH_LONG).show();
@@ -261,7 +309,8 @@ public class MatchDataActivity extends ActionBarActivity {
                 case 200: { // Only now, we continue
                     String matchDataString = loLResponse.getJsonString();
                     String champKeys = loadChampKeys(); // May return null.
-                    if (champKeys == null) return null; // If so, we consider it as an unrecoverable error.
+                    if (champKeys == null)
+                        return null; // If so, we consider it as an unrecoverable error.
                     return loadIconsAndFinish(champKeys, matchDataString);
                 }
                 case 400: {
@@ -300,7 +349,7 @@ public class MatchDataActivity extends ActionBarActivity {
         // Loads a string containing the result of
         // https://global.api.pvp.net/api/lol/static-data/euw/v1.2/champion?dataById=true&api_key=xxx
         // Returns null if failed.
-        private String loadChampKeys(){
+        private String loadChampKeys() {
             publishProgress(getString(R.string.loading_champs));
             LoLResponse loLResponse;
 
@@ -354,9 +403,9 @@ public class MatchDataActivity extends ActionBarActivity {
 
         // Receives a String representating the champion keys and other one with the match data, and
         // uses them to get the champ icons. Then, it put all together in a LoLMatchData object and returns it.
-        private LoLMatchData loadIconsAndFinish(String jsonStringChampKeys, String jsonStringMatchData){
+        private LoLMatchData loadIconsAndFinish(String jsonStringChampKeys, String jsonStringMatchData) {
             final Integer NUM_SUMMONERS = 10;
-            String [] champKeys = new String [NUM_SUMMONERS];
+            String[] champKeys = new String[NUM_SUMMONERS];
             Bitmap[] champImages = new Bitmap[NUM_SUMMONERS];
             JSONObject matchData;
             String VERSION;
@@ -367,9 +416,9 @@ public class MatchDataActivity extends ActionBarActivity {
                 JSONArray participants = matchData.getJSONArray("participants");
 
                 // Let's gather the 10 champions Keys (we need them to load their images).
-                for (int i = 0; i<participants.length(); i++){
+                for (int i = 0; i < participants.length(); i++) {
                     Integer champId = participants.getJSONObject(i).getInt("championId");
-                    champKeys [i] = champsData.getJSONObject(champId.toString()).getString("key");
+                    champKeys[i] = champsData.getJSONObject(champId.toString()).getString("key");
                 }
             } catch (JSONException e) {
                 Logger.appendLog("Error 23 - Unknown error" + e.toString());
@@ -379,7 +428,7 @@ public class MatchDataActivity extends ActionBarActivity {
 
             // Now, we have an array with the key of the 10 champions. The key is what we needed
             // in order to download their icons. Now, let's download their icons.
-            for (int i = 0; i<champKeys.length; i++){
+            for (int i = 0; i < champKeys.length; i++) {
                 publishProgress(getString(R.string.loading_images) + i + "/" + NUM_SUMMONERS.toString() + ")");
                 Bitmap image;
                 String url = "http://ddragon.leagueoflegends.com/cdn/" + VERSION + "/img/champion/" +
@@ -396,52 +445,6 @@ public class MatchDataActivity extends ActionBarActivity {
             }
             return new LoLMatchData(matchData, champImages);
         }
-    }
-
-    /**********************************************************************************************/
-
-    // onClick methods.
-
-    public void onClickDetails(View v){
-        Integer[] viewsId = new Integer[]{
-                R.id.imageButton101,
-                R.id.imageButton102,
-                R.id.imageButton103,
-                R.id.imageButton104,
-                R.id.imageButton105,
-                R.id.imageButton201,
-                R.id.imageButton202,
-                R.id.imageButton203,
-                R.id.imageButton204,
-                R.id.imageButton205
-        };
-        final Intent intent = new Intent(this, DetailsActivity.class);
-        try {
-            // Check what button was called.
-            for (int i = 0; i<viewsId.length; i++)
-            if (v.getId() == viewsId[i]) {
-                // Put the "participant" object
-                intent.putExtra("participant", this.matchData.getJsonObject().getJSONArray("participants").getJSONObject(i).toString());
-                // Put the champ icon.
-                ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
-                boolean success = this.matchData.getChampImages()[i].compress(Bitmap.CompressFormat.PNG, 100, byteStream);
-                if (success)
-                    intent.putExtra("icon", byteStream.toByteArray());
-                // Put the team.
-                if (i<5)
-                    intent.putExtra("team", this.matchData.getJsonObject().getJSONArray("teams").getJSONObject(0).toString());
-                else
-                    intent.putExtra("team", this.matchData.getJsonObject().getJSONArray("teams").getJSONObject(1).toString());
-                break;
-            }
-        } catch (JSONException e) {
-            Logger.appendLog("Error 30 - " + e.toString());
-            Toast.makeText(getApplicationContext(),
-                    getString(R.string.something_went_wrong),
-                    Toast.LENGTH_LONG).show();
-            return;
-        }
-        startActivity(intent);
     }
 }
 

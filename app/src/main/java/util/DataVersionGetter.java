@@ -29,7 +29,7 @@ public class DataVersionGetter {
             file = new File(dir, "data_dragon_version.txt");
             // If the data version file doesn't exist (for example, this code is probably running for
             // the first time) we create it.
-            if (!file.exists()){
+            if (!file.exists()) {
                 try {
                     file.createNewFile();
                     BufferedWriter buf = new BufferedWriter(new FileWriter(file, true));
@@ -40,7 +40,7 @@ public class DataVersionGetter {
                     Logger.appendLog("Error 35 - " + e.toString());
                     return DEFAULT;
                 }
-            // If the file exists, read it. Maybe it has been manually actualized.
+                // If the file exists, read it. Maybe it has been manually actualized.
             } else {
                 try {
                     BufferedReader buf = new BufferedReader(new FileReader(file));

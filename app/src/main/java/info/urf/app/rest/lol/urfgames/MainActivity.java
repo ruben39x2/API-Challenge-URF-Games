@@ -6,8 +6,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -31,7 +31,6 @@ import java.util.List;
 
 import util.APIKey;
 import util.LoLResponse;
-
 import util.Logger;
 import util.SendRequest;
 
@@ -40,17 +39,44 @@ import util.SendRequest;
 // Launcher activity. Shows a list with the recent URF Games.
 
 public class MainActivity extends ActionBarActivity {
+    private final Context context = this;
     private ArrayList<String> recentGames = new ArrayList<>();
     private Integer minutesToBack = 0;
     private RecentURFGamesAdapter adapter;
-    private final Context context = this;
     private boolean canLoadMoreGames = false;
     private String REGION = "euw";
+    /**
+     * ******************************************************************************************
+     */
 
-    /**********************************************************************************************/
+    // Uncaught exceptions handler.
+
+    // The following things are used to log the uncaught exceptions in a file. They are not
+    // really relevant for the app functionality, but also important.
+    private Thread.UncaughtExceptionHandler defaultUEH;
+    private Thread.UncaughtExceptionHandler _unCaughtExceptionHandler =
+            new Thread.UncaughtExceptionHandler() {
+                @Override
+                public void uncaughtException(Thread thread, Throwable ex) {
+                    String error = "-----------------------------------------\nFATAL: An unhandled exception has occurred!\n";
+                    error += "Reason of the error: " + ex.getMessage() + "\nTRACE:\n";
+                    StackTraceElement[] trace = ex.getStackTrace();
+                    for (StackTraceElement aTrace : trace) error += aTrace.toString() + "\n";
+                    error += "CAUSE:\n";
+                    StackTraceElement[] cause = ex.getCause().getStackTrace();
+                    for (StackTraceElement aCause : cause) error += aCause.toString() + "\n";
+                    error += "-----------------------------------------\n";
+                    Logger.appendLog(error);
+                    // Re-throw critical exception further to the os (important)
+                    defaultUEH.uncaughtException(thread, ex);
+                }
+            };
+
+    /**
+     * ******************************************************************************************
+     */
 
     // Methods overrided from the superclass.
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // Set the view.
@@ -72,7 +98,7 @@ public class MainActivity extends ActionBarActivity {
         tVRegion.setText(this.REGION.toUpperCase());
 
         // Check if the activity was restored.
-        if (savedInstanceState != null){
+        if (savedInstanceState != null) {
             this.minutesToBack = savedInstanceState.getInt("minutesToBack");
             this.recentGames = savedInstanceState.getStringArrayList("recentGames");
             this.canLoadMoreGames = savedInstanceState.getBoolean("canLoadMoreGames");
@@ -124,43 +150,46 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    /**********************************************************************************************/
+    /**
+     * ******************************************************************************************
+     */
 
     // Private methods.
-
-    private void getRegionFromPreferences(){
+    private void getRegionFromPreferences() {
         SharedPreferences prefs = getSharedPreferences("URFGames", MODE_PRIVATE);
         this.REGION = prefs.getString("region", "EUW").toLowerCase();
     }
 
-    private void loadRecentURFGames(){
+    private void loadRecentURFGames() {
         new LoadGamesAsync().execute();
     }
 
-    private void setCanLoadMoreGames(boolean canLoadMoreGames){
+    private void setCanLoadMoreGames(boolean canLoadMoreGames) {
         this.canLoadMoreGames = canLoadMoreGames;
     }
 
-    private void writeActivityVariableRecentGames(List<String> recent){
+    private void writeActivityVariableRecentGames(List<String> recent) {
         this.recentGames.addAll(recent);
     }
 
-    private void clearActivityVariableRecentGames(){
+    private void clearActivityVariableRecentGames() {
         this.recentGames.clear();
     }
 
-    private ArrayList<String> getActivityVariableRecentGames() {return this.recentGames;}
+    private ArrayList<String> getActivityVariableRecentGames() {
+        return this.recentGames;
+    }
 
-    private void actualizeGamesList(){
+    private void actualizeGamesList() {
         this.adapter.notifyDataSetChanged();
     }
 
-    private void setMinutesToBack(Integer minutes){
-        this.minutesToBack = minutes;
+    private Integer getMinutesToBack() {
+        return this.minutesToBack;
     }
 
-    private Integer getMinutesToBack(){
-        return this.minutesToBack;
+    private void setMinutesToBack(Integer minutes) {
+        this.minutesToBack = minutes;
     }
 
     private void initializeGamesList() {
@@ -185,7 +214,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
     // Shows a dialog to change the current region (also from preferences).
-    private void changePreferences(){
+    private void changePreferences() {
         // Get current region.
         SharedPreferences prefs = getSharedPreferences("URFGames", MODE_PRIVATE);
         String region = prefs.getString("region", "EUW");
@@ -233,7 +262,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
     // Shows a dialog with "about the app" info.
-    private void showAbout(){
+    private void showAbout() {
         AlertDialog.Builder aboutDialog = new AlertDialog.Builder(context);
         aboutDialog.setTitle(getString(R.string.about_the_app))
                 .setIcon(R.mipmap.ic_launcher)
@@ -249,7 +278,9 @@ public class MainActivity extends ActionBarActivity {
         alertDialog.show();
     }
 
-    public void onLoadMoreGames(){
+    // Subclass for the custom listView.
+
+    public void onLoadMoreGames() {
         if (canLoadMoreGames)
             loadRecentURFGames();
         else
@@ -258,7 +289,9 @@ public class MainActivity extends ActionBarActivity {
                     Toast.LENGTH_LONG).show();
     }
 
-    /**********************************************************************************************/
+    /**
+     * ******************************************************************************************
+     */
 
     // Subclasses.
 
@@ -370,7 +403,7 @@ public class MainActivity extends ActionBarActivity {
                 // Insert the games ID into a list and return it.
                 JSONArray games = new JSONArray(loLResponse.getJsonString());
                 List<String> gamesId = new LinkedList<>();
-                for (int i = 0; i<games.length(); i++){
+                for (int i = 0; i < games.length(); i++) {
                     Long id = games.getLong(i);
                     // We will return a list with Strings like: [gameId][blank_space][minutesAgoItStarted]
                     gamesId.add(id.toString() + " " + (minutesToBack + 5));
@@ -386,22 +419,22 @@ public class MainActivity extends ActionBarActivity {
         }
 
         // Get a valid date (example: 11:00, 11:05, 11:10...) less the amount of backMinutes.
-        private String getCurrentValidDate(int backMinutes){
+        private String getCurrentValidDate(int backMinutes) {
             Date currentDate = new Date();
             Integer minutes = currentDate.getMinutes();
             // Now we make the minutes to be multiplicative by 5.
             minutes = minutes - (minutes % 5);
             // Adapt the date.
             currentDate.setSeconds(0);
-            currentDate.setMinutes(minutes-backMinutes);
+            currentDate.setMinutes(minutes - backMinutes);
             Long currentDateLong = currentDate.getTime();
             String currentDateStr = currentDateLong.toString();
 
-            return currentDateStr.substring(0, currentDateStr.length()-3); // We remove the 3 last characters
-        };                                                                 // to convert milliseconds to seconds.
-    }
+            return currentDateStr.substring(0, currentDateStr.length() - 3); // We remove the 3 last characters
+        }
 
-    // Subclass for the custom listView.
+        ;                                                                 // to convert milliseconds to seconds.
+    }
 
     // The adapter won't contain itself any data, it will use the global variable "recentGames"
     private class RecentURFGamesAdapter extends BaseAdapter {
@@ -423,7 +456,7 @@ public class MainActivity extends ActionBarActivity {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            Integer pos = position + 1 ;
+            Integer pos = position + 1;
             LayoutInflater inflater = getLayoutInflater();
             View row;
             row = inflater.inflate(R.layout.urf_game_item, parent, false);
@@ -433,37 +466,12 @@ public class MainActivity extends ActionBarActivity {
             sub2 = (TextView) row.findViewById(R.id.textViewItemSubtitle2);
             //Set the data.
             // Now we obtain a string array with [0] = gameId and [1] = started ... minutes ago
-            String [] itemData = getActivityVariableRecentGames().get(position).split(" ");
+            String[] itemData = getActivityVariableRecentGames().get(position).split(" ");
             title.setText(pos.toString() + ": " + getString(R.string.urf));
             sub1.setText(getString(R.string.started_over) + itemData[1] + getString(R.string.minutes_ago));
             sub2.setText(getString(R.string.game_id) + " " + itemData[0]);
             return row;
         }
     }
-
-    /**********************************************************************************************/
-
-    // Uncaught exceptions handler.
-
-    // The following things are used to log the uncaught exceptions in a file. They are not
-    // really relevant for the app functionality, but also important.
-    private Thread.UncaughtExceptionHandler defaultUEH;
-    private Thread.UncaughtExceptionHandler _unCaughtExceptionHandler =
-            new Thread.UncaughtExceptionHandler() {
-                @Override
-                public void uncaughtException(Thread thread, Throwable ex) {
-                    String error = "-----------------------------------------\nFATAL: An unhandled exception has occurred!\n";
-                    error += "Reason of the error: " + ex.getMessage() + "\nTRACE:\n";
-                    StackTraceElement[] trace = ex.getStackTrace();
-                    for (StackTraceElement aTrace : trace) error += aTrace.toString() + "\n";
-                    error += "CAUSE:\n";
-                    StackTraceElement[] cause = ex.getCause().getStackTrace();
-                    for (StackTraceElement aCause : cause) error += aCause.toString() + "\n";
-                    error += "-----------------------------------------\n";
-                    Logger.appendLog(error);
-                    // Re-throw critical exception further to the os (important)
-                    defaultUEH.uncaughtException(thread, ex);
-                }
-            };
 
 }

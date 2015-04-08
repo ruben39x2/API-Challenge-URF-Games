@@ -3,9 +3,6 @@ package util;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -21,19 +18,19 @@ import java.util.List;
 public class LoLBuildData implements Serializable {
     private transient List<Bitmap> items;
 
-    public LoLBuildData(){
+    public LoLBuildData() {
         this.items = new LinkedList<>();
     }
 
-    public void addItem(Bitmap m){
+    public void addItem(Bitmap m) {
         this.items.add(m);
     }
 
-    public Bitmap getItem(int pos){
+    public Bitmap getItem(int pos) {
         return this.items.get(pos);
     }
 
-    public int getCount(){
+    public int getCount() {
         return this.items.size();
     }
 

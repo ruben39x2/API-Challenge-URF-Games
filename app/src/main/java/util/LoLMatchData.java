@@ -7,7 +7,6 @@ package util;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -17,20 +16,20 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
-public class LoLMatchData implements Serializable{
+public class LoLMatchData implements Serializable {
     private transient JSONObject jsonObject;
     private transient Bitmap[] champImages;
 
-    public LoLMatchData(JSONObject jsonObject, Bitmap[] champImages){
+    public LoLMatchData(JSONObject jsonObject, Bitmap[] champImages) {
         this.jsonObject = jsonObject;
         this.champImages = champImages;
     }
 
-    public JSONObject getJsonObject(){
+    public JSONObject getJsonObject() {
         return this.jsonObject;
     }
 
-    public Bitmap[] getChampImages(){
+    public Bitmap[] getChampImages() {
         return this.champImages;
     }
 
@@ -58,7 +57,7 @@ public class LoLMatchData implements Serializable{
         ois.defaultReadObject();
         // 1st.
         try {
-            this.jsonObject = new JSONObject((String)ois.readObject());
+            this.jsonObject = new JSONObject((String) ois.readObject());
         } catch (JSONException e) {
             this.jsonObject = null;
         }

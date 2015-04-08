@@ -1,34 +1,24 @@
 package info.urf.app.rest.lol.urfgames;
 
-import android.app.Activity;
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.AsyncTask;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.os.Bundle;
-import android.util.Log;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.support.v4.widget.DrawerLayout;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
 
 import util.DataVersionGetter;
 import util.LoLBuildData;
@@ -52,10 +42,11 @@ public class DetailsActivity extends ActionBarActivity
     private byte[] icon = null;
 
 
-    /**********************************************************************************************/
+    /**
+     * ******************************************************************************************
+     */
 
     // Own methods.
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // Set the variables that came from the previous activity.
@@ -119,17 +110,19 @@ public class DetailsActivity extends ActionBarActivity
     }
 
 
-    /**********************************************************************************************/
+    /**
+     * ******************************************************************************************
+     */
 
     // Private methods.
 
     // This will be called at the end of the asyncTask.
-    private void writeGlobalVariableBuild(LoLBuildData items){
+    private void writeGlobalVariableBuild(LoLBuildData items) {
         this.build = items;
     }
 
     // Get the items ID of the current participant var.
-    private Long[] getItemsId(){
+    private Long[] getItemsId() {
         final int MAX_ITEMS = 7;
         Long[] itemsId = new Long[MAX_ITEMS];
 
@@ -141,13 +134,15 @@ public class DetailsActivity extends ActionBarActivity
             return null;
         }
         // Get the item IDs.
-        for (int i = 0; i<itemsId.length; i++){
+        for (int i = 0; i < itemsId.length; i++) {
             itemsId[i] = LoLDataParser.getItemId(participant, i);
         }
         return itemsId;
     }
 
-    /**********************************************************************************************/
+    /**
+     * ******************************************************************************************
+     */
 
     // Subclasses.
 
@@ -200,7 +195,7 @@ public class DetailsActivity extends ActionBarActivity
             TextView tVPhysicalDamageDealtToChampions = (TextView) rootView.findViewById(R.id.textViewStatsPhysicalDamageDealtToChampions);
 
             // Set the champion icon.
-            byte [] image = getArguments().getByteArray("icon");
+            byte[] image = getArguments().getByteArray("icon");
             Bitmap icon = null;
             if (image != null && image.length > 0) {
                 icon = BitmapFactory.decodeByteArray(image, 0, image.length);
@@ -253,7 +248,7 @@ public class DetailsActivity extends ActionBarActivity
             // Variables for setting up the view.
             LoLBuildData build;
             View rootView = inflater.inflate(R.layout.fragment_build, container, false);
-            ImageView [] items = new ImageView[]{
+            ImageView[] items = new ImageView[]{
                     (ImageView) rootView.findViewById(R.id.imageViewItem1),
                     (ImageView) rootView.findViewById(R.id.imageViewItem2),
                     (ImageView) rootView.findViewById(R.id.imageViewItem3),
@@ -264,7 +259,7 @@ public class DetailsActivity extends ActionBarActivity
             };
 
             // Set the image for the champion icon.
-            byte [] image = getArguments().getByteArray("icon");
+            byte[] image = getArguments().getByteArray("icon");
             Bitmap icon = null;
             if (image != null && image.length > 0) {
                 icon = BitmapFactory.decodeByteArray(image, 0, image.length);
@@ -320,11 +315,16 @@ public class DetailsActivity extends ActionBarActivity
             // Generate a string with the achievements.
             String achievements = "";
 
-            if (LoLDataParser.getFirstBlood(team)) achievements += getString(R.string.team_first_blood);
-            if (LoLDataParser.getFirstDragon(team)) achievements += getString(R.string.team_first_drake);
-            if (LoLDataParser.getFirstBaron(team)) achievements +=getString(R.string.team_first_baron);
-            if (LoLDataParser.getFirstTower(team)) achievements += getString(R.string.team_first_tower);
-            if (LoLDataParser.getFirstInhibitor(team)) achievements += getString(R.string.team_first_inhibitor);
+            if (LoLDataParser.getFirstBlood(team))
+                achievements += getString(R.string.team_first_blood);
+            if (LoLDataParser.getFirstDragon(team))
+                achievements += getString(R.string.team_first_drake);
+            if (LoLDataParser.getFirstBaron(team))
+                achievements += getString(R.string.team_first_baron);
+            if (LoLDataParser.getFirstTower(team))
+                achievements += getString(R.string.team_first_tower);
+            if (LoLDataParser.getFirstInhibitor(team))
+                achievements += getString(R.string.team_first_inhibitor);
             achievements += "\n";
             achievements += getString(R.string.team_towers_destroyed) + LoLDataParser.getTeamTowerKills(team) + "\n";
             achievements += getString(R.string.team_inhibitors_destroyed) + LoLDataParser.getTeamInhibitorKills(team) + "\n";
@@ -337,12 +337,12 @@ public class DetailsActivity extends ActionBarActivity
             if (LoLDataParser.getTeamId(team) == 100) {
                 // Blue team.
                 tVTeam.setText(getString(R.string.blue_team));
-                tVTeam.setTextColor(Color.rgb(10,10,250));
+                tVTeam.setTextColor(Color.rgb(10, 10, 250));
             } else {
                 if (LoLDataParser.getTeamId(team) == 200) {
                     // Red team.
                     tVTeam.setText(getString(R.string.red_team));
-                    tVTeam.setTextColor(Color.rgb(250,10,10));
+                    tVTeam.setTextColor(Color.rgb(250, 10, 10));
                 } else {
                     // Unknown team.
                     tVTeam.setText(getString(R.string.unknown));
@@ -370,8 +370,9 @@ public class DetailsActivity extends ActionBarActivity
         }
     }
 
-    private class LoadItemsTask extends AsyncTask<Long[], Void, LoLBuildData>{
+    private class LoadItemsTask extends AsyncTask<Long[], Void, LoLBuildData> {
         private final int IMAGE_SIZE = 64;
+
         @Override
         protected LoLBuildData doInBackground(Long[]... params) {
             LoLBuildData result = new LoLBuildData();
@@ -379,7 +380,7 @@ public class DetailsActivity extends ActionBarActivity
             String VERSION;
             VERSION = DataVersionGetter.getVersion();
             for (int i = 0; i < 7; i++) {
-                if (!items[i].equals((long)0)) { // If we, a priori, have a valid icon Id.
+                if (!items[i].equals((long) 0)) { // If we, a priori, have a valid icon Id.
                     try {
                         InputStream in = new java.net.URL("http://ddragon.leagueoflegends.com/cdn/" + VERSION + "/img/item/" +
                                 items[i] + ".png").openStream();

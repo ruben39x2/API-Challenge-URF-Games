@@ -1,32 +1,37 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="info.urf.app.rest.lol.urfgames.DetailsActivity">
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <TextView
-                android:textAppearance="?android:attr/textAppearanceLarge"
                 android:id="@+id/stats"
-                android:text="@string/stats"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                android:layout_alignParentTop="true"/>
+                android:text="@string/stats"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <ImageView
                 android:id="@+id/imageViewStatsChampion"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
                 android:layout_below="@id/stats"
-                android:layout_marginTop="4dp"/>
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="4dp" />
 
 
             <!-- TextViews for the data:
@@ -47,9 +52,9 @@
             -->
 
             <TextView
+                android:id="@+id/textViewStatsContributionForKill"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/textViewStatsContributionForKill"
                 android:layout_below="@+id/imageViewStatsChampion"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"
@@ -57,122 +62,122 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/textViewStatsKills"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/textViewStatsKills"
                 android:layout_below="@+id/textViewStatsContributionForKill"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="5dp"
                 android:textColor="#ff000000" />
 
             <TextView
+                android:id="@+id/textViewStatsDeaths"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/textViewStatsDeaths"
                 android:layout_below="@+id/textViewStatsKills"
                 android:layout_centerHorizontal="true"
                 android:textColor="#ff000000" />
 
             <TextView
+                android:id="@+id/textViewStatsAssists"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/textViewStatsAssists"
                 android:layout_below="@+id/textViewStatsDeaths"
                 android:layout_centerHorizontal="true"
                 android:textColor="#ff000000" />
 
             <TextView
+                android:id="@+id/textViewStatsMinionsKilled"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/textViewStatsMinionsKilled"
                 android:layout_below="@+id/textViewStatsAssists"
                 android:layout_centerHorizontal="true"
                 android:textColor="#ff000000" />
 
             <TextView
+                android:id="@+id/textViewStatsNeutralMinionsKilled"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/textViewStatsNeutralMinionsKilled"
                 android:layout_below="@+id/textViewStatsMinionsKilled"
                 android:layout_centerHorizontal="true"
                 android:textColor="#ff000000" />
 
             <TextView
+                android:id="@+id/textViewStatsLargestMultiKill"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/textViewStatsLargestMultiKill"
                 android:layout_below="@+id/textViewStatsNeutralMinionsKilled"
                 android:layout_centerHorizontal="true"
                 android:textColor="#ff000000" />
 
             <TextView
+                android:id="@+id/textViewStatsLargestKillingSpree"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/textViewStatsLargestKillingSpree"
                 android:layout_below="@+id/textViewStatsLargestMultiKill"
                 android:layout_centerHorizontal="true"
                 android:textColor="#ff000000" />
 
             <TextView
+                android:id="@+id/textViewStatsTowerKills"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/textViewStatsTowerKills"
                 android:layout_below="@+id/textViewStatsLargestKillingSpree"
                 android:layout_centerHorizontal="true"
                 android:textColor="#ff000000" />
 
             <TextView
+                android:id="@+id/textViewStatsInhibitorKills"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/textViewStatsInhibitorKills"
                 android:layout_below="@+id/textViewStatsTowerKills"
                 android:layout_centerHorizontal="true"
                 android:textColor="#ff000000" />
 
             <TextView
+                android:id="@+id/textViewStatsGoldEarned"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/textViewStatsGoldEarned"
                 android:layout_below="@+id/textViewStatsInhibitorKills"
                 android:layout_centerHorizontal="true"
                 android:textColor="#ff000000" />
 
             <TextView
+                android:id="@+id/textViewStatsChampLevel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/textViewStatsChampLevel"
                 android:layout_below="@+id/textViewStatsGoldEarned"
                 android:layout_centerHorizontal="true"
                 android:textColor="#ff000000" />
 
             <TextView
+                android:id="@+id/textViewStatsTotalHeal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/textViewStatsTotalHeal"
                 android:layout_below="@+id/textViewStatsChampLevel"
                 android:layout_centerHorizontal="true"
                 android:textColor="#ff006500" />
 
             <TextView
+                android:id="@+id/textViewStatsTrueDamageDealtToChampions"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/textViewStatsTrueDamageDealtToChampions"
                 android:layout_below="@id/textViewStatsTotalHeal"
                 android:layout_centerHorizontal="true"
                 android:textColor="#ff000000" />
 
             <TextView
+                android:id="@+id/textViewStatsMagicDamageDealtToChampions"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/textViewStatsMagicDamageDealtToChampions"
                 android:layout_below="@id/textViewStatsTrueDamageDealtToChampions"
                 android:layout_centerHorizontal="true"
                 android:textColor="#ff8400b3" />
 
             <TextView
+                android:id="@+id/textViewStatsPhysicalDamageDealtToChampions"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/textViewStatsPhysicalDamageDealtToChampions"
                 android:layout_below="@id/textViewStatsMagicDamageDealtToChampions"
                 android:layout_centerHorizontal="true"
                 android:textColor="#ffe90400" />
