@@ -57,6 +57,7 @@ public class DetailsActivity extends ActionBarActivity
         this.JsonTeam = getIntent().getStringExtra("team");
 
 
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
 
