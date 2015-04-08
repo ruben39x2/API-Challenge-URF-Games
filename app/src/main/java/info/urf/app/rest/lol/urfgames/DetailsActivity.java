@@ -388,9 +388,13 @@ public class DetailsActivity extends ActionBarActivity
                     } catch (Exception e) {
                         Logger.appendLog("Error 35 - " + e.toString());
                         result.addItem(Bitmap.createScaledBitmap(
-                                BitmapFactory.decodeResource(getResources(), R.drawable.no_item),
+                                BitmapFactory.decodeResource(getResources(), R.drawable.unknown),
                                 IMAGE_SIZE, IMAGE_SIZE, false));
                     }
+                } else {
+                    result.addItem(Bitmap.createScaledBitmap(
+                            BitmapFactory.decodeResource(getResources(), R.drawable.no_item),
+                            IMAGE_SIZE, IMAGE_SIZE, false));
                 }
             }
             return result;
