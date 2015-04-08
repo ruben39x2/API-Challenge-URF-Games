@@ -60,7 +60,7 @@
     <string name="neutral_minions_killed">"Neutral minions killed: "</string>
     <string name="largest_multikill">"Largest multikill: "</string>
     <string name="largest_killing_spree">"Largest killing spree: "</string>
-    <string name="turrets_destroyed">"Turrets destroyed: "</string>
+    <string name="turrets_destroyed">"Towers destroyed: "</string>
     <string name="inhibitors_destroyed">"Inhibitors destroyed: "</string>
     <string name="gold_earned">"Gold earned: "</string>
     <string name="champ_level">"Champion level: "</string>
@@ -68,4 +68,17 @@
     <string name="truedmg">"True damage dealt to champions: "</string>
     <string name="magicdmg">"Magic damage dealt to champions: "</string>
     <string name="physicaldmg">"Physical damage dealt to champions: "</string>
+    <string name="team_first_blood">The team did the first blood\n</string>
+    <string name="team_first_drake">The team killed the first drake\n</string>
+    <string name="team_first_baron">The team killed the first baron\n</string>
+    <string name="team_first_tower">The team destroyed the first tower\n</string>
+    <string name="team_first_inhibitor">The team destroyed the first inhibitor\n</string>
+    <string name="team_towers_destroyed">"Towers destroyed: "</string>
+    <string name="team_inhibitors_destroyed">"Inhibitors destroyed: "</string>
+    <string name="team_dragon_kills">"Dragon kills: "</string>
+    <string name="team_baron_kills">"Baron kills: "</string>
+    <string name="blue_team">Blue team</string>
+    <string name="red_team">Red team</string>
+    <string name="team_victory">VICTORY</string>
+    <string name="team_defeat">DEFEAT</string>
 </resources>

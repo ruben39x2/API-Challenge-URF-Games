@@ -297,4 +297,113 @@ public class LoLDataParser {
         }
     }
 
+    // Receives an object with the team info.
+    public static boolean getFirstBlood(JSONObject team){
+        try {
+            return team.getBoolean("firstBlood");
+        } catch (JSONException e) {
+            Logger.appendLog("Error 38 - " + e.toString());
+            return false;
+        }
+    }
+
+    // Receives an object with the team info.
+    public static boolean getFirstTower(JSONObject team){
+        try {
+            return team.getBoolean("firstTower");
+        } catch (JSONException e) {
+            Logger.appendLog("Error 39 - " + e.toString());
+            return false;
+        }
+    }
+
+    // Receives an object with the team info.
+    public static boolean getFirstBaron(JSONObject team){
+        try {
+            return team.getBoolean("firstBaron");
+        } catch (JSONException e) {
+            Logger.appendLog("Error 39 - " + e.toString());
+            return false;
+        }
+    }
+
+    // Receives an object with the team info.
+    public static boolean getFirstDragon(JSONObject team){
+        try {
+            return team.getBoolean("firstDragon");
+        } catch (JSONException e) {
+            Logger.appendLog("Error 40 - " + e.toString());
+            return false;
+        }
+    }
+
+    // Receives an object with the team info.
+    public static boolean getFirstInhibitor(JSONObject team){
+        try {
+            return team.getBoolean("firstInhibitor");
+        } catch (JSONException e) {
+            Logger.appendLog("Error 41 - " + e.toString());
+            return false;
+        }
+    }
+
+    // Receives an object with the team info.
+    public static Integer getTeamTowerKills(JSONObject team){
+        try {
+            return team.getInt("towerKills");
+        } catch (JSONException e) {
+            Logger.appendLog("Error 42 - " + e.toString());
+            return 0;
+        }
+    }
+
+    // Receives an object with the team info.
+    public static Integer getTeamInhibitorKills(JSONObject team){
+        try {
+            return team.getInt("inhibitorKills");
+        } catch (JSONException e) {
+            Logger.appendLog("Error 43 - " + e.toString());
+            return 0;
+        }
+    }
+
+    // Receives an object with the team info.
+    public static Integer getTeamDragonKills(JSONObject team){
+        try {
+            return team.getInt("dragonKills");
+        } catch (JSONException e) {
+            Logger.appendLog("Error 44 - " + e.toString());
+            return 0;
+        }
+    }
+
+    // Receives an object with the team info.
+    public static Integer getTeamBaronKills(JSONObject team){
+        try {
+            return team.getInt("baronKills");
+        } catch (JSONException e) {
+            Logger.appendLog("Error 45 - " + e.toString());
+            return 0;
+        }
+    }
+
+    // Receives an object with the team info.
+    public static Boolean getTeamWinner(JSONObject team){
+        try {
+            return team.getBoolean("winner");
+        } catch (JSONException e) {
+            Logger.appendLog("Error 46 - " + e.toString());
+            return null;
+        }
+    }
+
+    // Receives an object with the team info.
+    public static Integer getTeamId(JSONObject team){
+        try {
+            return team.getInt("teamId");
+        } catch (JSONException e) {
+            Logger.appendLog("Error 47 - " + e.toString());
+            return null;
+        }
+    }
 }

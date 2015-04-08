@@ -20,6 +20,7 @@ public class Logger {
         File logFile = null;
         if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
             Log.d("Log", "Couldn't access to logFile");
+            return;
         } else {
             String dir = Environment.getExternalStorageDirectory() + File.separator + "logs";
             File folder = new File(dir); //folder name

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
@@ -18,14 +19,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
+import util.DataVersionGetter;
+import util.LoLBuildData;
 import util.LoLDataParser;
 import util.Logger;
 
@@ -40,6 +46,7 @@ public class DetailsActivity extends ActionBarActivity
     // Auxiliar fragment managing the behaviors, interactions and presentation of the navigation drawer.
     private NavigationDrawerFragment mNavigationDrawerFragment;
 
+    private LoLBuildData build = null;
     private String JsonParticipant = null;
     private String JsonTeam = null;
     private byte[] icon = null;
@@ -56,11 +63,25 @@ public class DetailsActivity extends ActionBarActivity
         this.JsonParticipant = getIntent().getStringExtra("participant");
         this.JsonTeam = getIntent().getStringExtra("team");
 
-
-
+        // Inflate the view.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
 
+        // Manage the status of the variable build (the items of the player).
+        if (savedInstanceState == null) {
+            // Activity created for the first time.
+            // Start the asyncTask that is going to download the images of the icons.
+            new LoadItemsTask().execute(getItemsId());
+        } else {
+            if (savedInstanceState.getSerializable("build") == null) {
+                // Activity being restored, but items not loaded yet.
+                // Start the asyncTask that is going to download the images of the icons.
+                new LoadItemsTask().execute(getItemsId());
+            } else {
+                // Items already loaded.
+                this.build = (LoLBuildData) savedInstanceState.getSerializable("build");
+            }
+        }
 
         // Variable for the drawer fragment.
         mNavigationDrawerFragment = (NavigationDrawerFragment)
@@ -70,13 +91,13 @@ public class DetailsActivity extends ActionBarActivity
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
-
-        // Variables, variables...
-
-        //new LoadItemsTask().execute(new ArrayList<String>());
-
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (this.build != null) outState.putSerializable("build", this.build);
+    }
 
     // This will manage each interaction with the list of the drawer.
     @Override
@@ -89,12 +110,41 @@ public class DetailsActivity extends ActionBarActivity
                     .commit();
         if (position == 1)
             fragmentManager.beginTransaction()
-                    .replace(R.id.container, FragmentBuild.newInstance(this.icon, this.JsonParticipant))
+                    .replace(R.id.container, FragmentBuild.newInstance(this.icon, this.build))
                     .commit();
         if (position == 2)
             fragmentManager.beginTransaction()
-                    .replace(R.id.container, FragmentTeam.newInstance())
+                    .replace(R.id.container, FragmentTeam.newInstance(this.JsonTeam))
                     .commit();
+    }
+
+
+    /**********************************************************************************************/
+
+    // Private methods.
+
+    // This will be called at the end of the asyncTask.
+    private void writeGlobalVariableBuild(LoLBuildData items){
+        this.build = items;
+    }
+
+    // Get the items ID of the current participant var.
+    private Long[] getItemsId(){
+        final int MAX_ITEMS = 7;
+        Long[] itemsId = new Long[MAX_ITEMS];
+
+        JSONObject participant;
+        try {
+            participant = new JSONObject(this.JsonParticipant);
+        } catch (JSONException e) {
+            Logger.appendLog("Error 34 - " + e.toString());
+            return null;
+        }
+        // Get the item IDs.
+        for (int i = 0; i<itemsId.length; i++){
+            itemsId[i] = LoLDataParser.getItemId(participant, i);
+        }
+        return itemsId;
     }
 
     /**********************************************************************************************/
@@ -187,13 +237,12 @@ public class DetailsActivity extends ActionBarActivity
 
     public static class FragmentBuild extends Fragment {
         private final int IMAGE_SIZE = 128;
-        private final int MAX_ITEMS = 7;
 
-        public static FragmentBuild newInstance(byte[] icon, String jsonParticipant) {
+        public static FragmentBuild newInstance(byte[] icon, LoLBuildData build) {
             FragmentBuild fragment = new FragmentBuild();
             Bundle args = new Bundle();
-            args.putString("participant", jsonParticipant);
             args.putByteArray("icon", icon);
+            if (build != null) args.putSerializable("build", build);
             fragment.setArguments(args);
             return fragment;
         }
@@ -201,19 +250,18 @@ public class DetailsActivity extends ActionBarActivity
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            Long[] itemsId = new Long[MAX_ITEMS];
-
-            // Initialize the json.
-            JSONObject participant;
-            try {
-                participant = new JSONObject(getArguments().getString("participant"));
-            } catch (JSONException e) {
-                Logger.appendLog("Error 33 - " + e.toString());
-                return inflater.inflate(R.layout.fragment_stats, container, false);
-            }
-
-            // Initialize the rootView.
+            // Variables for setting up the view.
+            LoLBuildData build;
             View rootView = inflater.inflate(R.layout.fragment_build, container, false);
+            ImageView [] items = new ImageView[]{
+                    (ImageView) rootView.findViewById(R.id.imageViewItem1),
+                    (ImageView) rootView.findViewById(R.id.imageViewItem2),
+                    (ImageView) rootView.findViewById(R.id.imageViewItem3),
+                    (ImageView) rootView.findViewById(R.id.imageViewItem4),
+                    (ImageView) rootView.findViewById(R.id.imageViewItem5),
+                    (ImageView) rootView.findViewById(R.id.imageViewItem6),
+                    (ImageView) rootView.findViewById(R.id.imageViewItem7)
+            };
 
             // Set the image for the champion icon.
             byte [] image = getArguments().getByteArray("icon");
@@ -225,13 +273,13 @@ public class DetailsActivity extends ActionBarActivity
             ImageView champIcon = (ImageView) rootView.findViewById(R.id.imageViewBuildChampion);
             champIcon.setImageBitmap(icon);
 
-
-            // Get the item IDs.
-            for (int i = 0; i<itemsId.length; i++){
-                itemsId[i] = LoLDataParser.getItemId(participant, i);
+            // Now, show the items if they have been loaded and don't do it if they're still loading.
+            build = (LoLBuildData) getArguments().getSerializable("build");
+            if (build != null) { // Things loaded.
+                for (int i = 0; i < build.getCount(); i++) {
+                    items[i].setImageBitmap(build.getItem(i));
+                }
             }
-
-            // NOW LETS USE THAT IDs TO DOWNLOAD THE IMAGES AND RULE THE WORLD
 
             return rootView;
         }
@@ -241,10 +289,10 @@ public class DetailsActivity extends ActionBarActivity
 
     public static class FragmentTeam extends Fragment {
 
-        public static FragmentTeam newInstance() {
+        public static FragmentTeam newInstance(String jsonTeam) {
             FragmentTeam fragment = new FragmentTeam();
             Bundle args = new Bundle();
-            //args.putByteArray("icon", icon);
+            args.putString("team", jsonTeam);
             fragment.setArguments(args);
             return fragment;
         }
@@ -252,25 +300,106 @@ public class DetailsActivity extends ActionBarActivity
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
+            // Initialize the json.
+            JSONObject team;
+            try {
+                team = new JSONObject(getArguments().getString("team"));
+            } catch (JSONException e) {
+                Logger.appendLog("Error 37 - " + e.toString());
+                return inflater.inflate(R.layout.fragment_team, container, false);
+            }
+
+            // Initialize the rootView (the parent view which contains everything for this fragment)
             View rootView = inflater.inflate(R.layout.fragment_team, container, false);
 
-            // Set the things
+            // Initialize the views.
+            TextView tVTeam = (TextView) rootView.findViewById(R.id.textViewTeam);
+            TextView tVResult = (TextView) rootView.findViewById(R.id.textViewTeamResult);
+            TextView tVAchievements = (TextView) rootView.findViewById(R.id.textViewTeamAchievements);
+
+            // Generate a string with the achievements.
+            String achievements = "";
+
+            if (LoLDataParser.getFirstBlood(team)) achievements += getString(R.string.team_first_blood);
+            if (LoLDataParser.getFirstDragon(team)) achievements += getString(R.string.team_first_drake);
+            if (LoLDataParser.getFirstBaron(team)) achievements +=getString(R.string.team_first_baron);
+            if (LoLDataParser.getFirstTower(team)) achievements += getString(R.string.team_first_tower);
+            if (LoLDataParser.getFirstInhibitor(team)) achievements += getString(R.string.team_first_inhibitor);
+            achievements += "\n";
+            achievements += getString(R.string.team_towers_destroyed) + LoLDataParser.getTeamTowerKills(team) + "\n";
+            achievements += getString(R.string.team_inhibitors_destroyed) + LoLDataParser.getTeamInhibitorKills(team) + "\n";
+            achievements += getString(R.string.team_dragon_kills) + LoLDataParser.getTeamDragonKills(team) + "\n";
+            achievements += getString(R.string.team_baron_kills) + LoLDataParser.getTeamBaronKills(team) + "\n";
+
+            // Set the views.
+
+            // The team ID.
+            if (LoLDataParser.getTeamId(team) == 100) {
+                // Blue team.
+                tVTeam.setText(getString(R.string.blue_team));
+                tVTeam.setTextColor(Color.rgb(10,10,250));
+            } else {
+                if (LoLDataParser.getTeamId(team) == 200) {
+                    // Red team.
+                    tVTeam.setText(getString(R.string.red_team));
+                    tVTeam.setTextColor(Color.rgb(250,10,10));
+                } else {
+                    // Unknown team.
+                    tVTeam.setText(getString(R.string.unknown));
+                }
+            }
+
+            // The "VICTORY" or "DEFEAT" text.
+            if (LoLDataParser.getTeamWinner(team)) {
+                // Blue team.
+                tVResult.setText(getString(R.string.team_victory));
+            } else {
+                if (!LoLDataParser.getTeamWinner(team)) {
+                    // Red team.
+                    tVResult.setText(getString(R.string.team_defeat));
+                } else {
+                    // Unknown team.
+                    tVResult.setText(getString(R.string.unknown));
+                }
+            }
+
+            // The achievements.
+            tVAchievements.setText(achievements);
+
             return rootView;
         }
-
     }
 
-    private class LoadItemsTask extends AsyncTask<List<String>, Void, List<Bitmap>>{
+    private class LoadItemsTask extends AsyncTask<Long[], Void, LoLBuildData>{
+        private final int IMAGE_SIZE = 64;
         @Override
-        protected List<Bitmap> doInBackground(List<String>... params) {
-            return null;
+        protected LoLBuildData doInBackground(Long[]... params) {
+            LoLBuildData result = new LoLBuildData();
+            Long[] items = params[0];
+            String VERSION;
+            VERSION = DataVersionGetter.getVersion();
+            for (int i = 0; i < 7; i++) {
+                if (!items[i].equals((long)0)) { // If we, a priori, have a valid icon Id.
+                    try {
+                        InputStream in = new java.net.URL("http://ddragon.leagueoflegends.com/cdn/" + VERSION + "/img/item/" +
+                                items[i] + ".png").openStream();
+                        Bitmap image = BitmapFactory.decodeStream(in);
+                        result.addItem(Bitmap.createScaledBitmap(image, IMAGE_SIZE, IMAGE_SIZE, false));
+                    } catch (Exception e) {
+                        Logger.appendLog("Error 35 - " + e.toString());
+                        result.addItem(Bitmap.createScaledBitmap(
+                                BitmapFactory.decodeResource(getResources(), R.drawable.no_item),
+                                IMAGE_SIZE, IMAGE_SIZE, false));
+                    }
+                }
+            }
+            return result;
         }
 
         @Override
-        protected void onPostExecute(List<Bitmap> bitmaps) {
+        protected void onPostExecute(LoLBuildData bitmaps) {
             super.onPostExecute(bitmaps);
-
-            //onNavigationDrawerItemSelected(0);
+            writeGlobalVariableBuild(bitmaps);
         }
     }
 

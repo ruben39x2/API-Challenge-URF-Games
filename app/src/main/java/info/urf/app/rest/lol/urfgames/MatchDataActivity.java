@@ -25,6 +25,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 
 import util.APIKey;
+import util.DataVersionGetter;
 import util.LoLDataParser;
 import util.LoLMatchData;
 import util.LoLResponse;
@@ -358,6 +359,8 @@ public class MatchDataActivity extends ActionBarActivity {
             String [] champKeys = new String [NUM_SUMMONERS];
             Bitmap[] champImages = new Bitmap[NUM_SUMMONERS];
             JSONObject matchData;
+            String VERSION;
+            VERSION = DataVersionGetter.getVersion();
             try {
                 matchData = new JSONObject(jsonStringMatchData);
                 JSONObject champsData = new JSONObject(jsonStringChampKeys).getJSONObject("data");
@@ -379,7 +382,7 @@ public class MatchDataActivity extends ActionBarActivity {
             for (int i = 0; i<champKeys.length; i++){
                 publishProgress(getString(R.string.loading_images) + i + "/" + NUM_SUMMONERS.toString() + ")");
                 Bitmap image;
-                String url = "http://ddragon.leagueoflegends.com/cdn/5.2.1/img/champion/" +
+                String url = "http://ddragon.leagueoflegends.com/cdn/" + VERSION + "/img/champion/" +
                         champKeys[i] + ".png";
                 InputStream in;
                 try {
