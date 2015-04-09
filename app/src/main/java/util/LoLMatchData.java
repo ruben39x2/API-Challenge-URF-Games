@@ -42,10 +42,10 @@ public class LoLMatchData implements Serializable {
         // 1st: write the JSONObject (match data)
         oos.writeObject(this.jsonObject.toString());
         // 2nd: write the images.
-        for (int i = 0; i < this.champImages.length; i++)
-            if (this.champImages[i] != null) {
+        for (Bitmap champImage : this.champImages)
+            if (champImage != null) {
                 ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
-                boolean success = champImages[i].compress(Bitmap.CompressFormat.PNG, 100, byteStream);
+                boolean success = champImage.compress(Bitmap.CompressFormat.PNG, 100, byteStream);
                 if (success) {
                     oos.writeObject(byteStream.toByteArray());
                 }

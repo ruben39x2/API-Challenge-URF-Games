@@ -5,19 +5,19 @@
     <item
         android:id="@+id/action_more"
         android:orderInCategory="100"
-        android:title="Load more"
-        app:showAsAction="always" />
+        android:title="@string/load_more"
+        app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/action_region"
         android:orderInCategory="200"
-        android:title="Region"
+        android:title="@string/region"
         app:showAsAction="never" />
 
 
     <item
         android:id="@+id/action_about"
         android:orderInCategory="300"
-        android:title="About"
+        android:title="@string/about_title"
         app:showAsAction="never" />
 </menu>

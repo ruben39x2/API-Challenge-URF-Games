@@ -29,12 +29,8 @@ import util.Logger;
 
 // Shows the details of a player in a game.
 
-
 public class DetailsActivity extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
-
-    // Auxiliar fragment managing the behaviors, interactions and presentation of the navigation drawer.
-    private NavigationDrawerFragment mNavigationDrawerFragment;
 
     private LoLBuildData build = null;
     private String JsonParticipant = null;
@@ -75,7 +71,7 @@ public class DetailsActivity extends ActionBarActivity
         }
 
         // Variable for the drawer fragment.
-        mNavigationDrawerFragment = (NavigationDrawerFragment)
+        NavigationDrawerFragment mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
 
         // Set up the drawer.

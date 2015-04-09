@@ -111,8 +111,7 @@ public class LoLDataParser {
     public static Long getDeaths(JSONObject participant) {
         try {
             JSONObject stats = participant.getJSONObject("stats");
-            Long data = stats.getLong("deaths");
-            return data;
+            return stats.getLong("deaths");
         } catch (JSONException e) {
             return (long) 0;
         }
@@ -122,8 +121,7 @@ public class LoLDataParser {
     public static Long getAssists(JSONObject participant) {
         try {
             JSONObject stats = participant.getJSONObject("stats");
-            Long data = stats.getLong("assists");
-            return data;
+            return stats.getLong("assists");
         } catch (JSONException e) {
             return (long) 0;
         }
@@ -133,8 +131,7 @@ public class LoLDataParser {
     public static Long getMinionsKilled(JSONObject participant) {
         try {
             JSONObject stats = participant.getJSONObject("stats");
-            Long data = stats.getLong("minionsKilled");
-            return data;
+            return stats.getLong("minionsKilled");
         } catch (JSONException e) {
             return (long) 0;
         }
@@ -144,8 +141,7 @@ public class LoLDataParser {
     public static Long getNeutralMinionsKilled(JSONObject participant) {
         try {
             JSONObject stats = participant.getJSONObject("stats");
-            Long data = stats.getLong("neutralMinionsKilled");
-            return data;
+            return stats.getLong("neutralMinionsKilled");
         } catch (JSONException e) {
             return (long) 0;
         }
@@ -155,8 +151,7 @@ public class LoLDataParser {
     public static Long getLargestMultiKill(JSONObject participant) {
         try {
             JSONObject stats = participant.getJSONObject("stats");
-            Long data = stats.getLong("largestMultiKill");
-            return data;
+            return stats.getLong("largestMultiKill");
         } catch (JSONException e) {
             return (long) 0;
         }
@@ -166,8 +161,7 @@ public class LoLDataParser {
     public static Long getLargestKillingSpree(JSONObject participant) {
         try {
             JSONObject stats = participant.getJSONObject("stats");
-            Long data = stats.getLong("largestKillingSpree");
-            return data;
+            return stats.getLong("largestKillingSpree");
         } catch (JSONException e) {
             return (long) 0;
         }
@@ -177,8 +171,7 @@ public class LoLDataParser {
     public static Long getGoldEarned(JSONObject participant) {
         try {
             JSONObject stats = participant.getJSONObject("stats");
-            Long data = stats.getLong("goldEarned");
-            return data;
+            return stats.getLong("goldEarned");
         } catch (JSONException e) {
             return (long) 0;
         }
@@ -188,8 +181,7 @@ public class LoLDataParser {
     public static Long getChampLevel(JSONObject participant) {
         try {
             JSONObject stats = participant.getJSONObject("stats");
-            Long data = stats.getLong("champLevel");
-            return data;
+            return stats.getLong("champLevel");
         } catch (JSONException e) {
             return (long) 0;
         }
@@ -199,8 +191,7 @@ public class LoLDataParser {
     public static Long getTotalHeal(JSONObject participant) {
         try {
             JSONObject stats = participant.getJSONObject("stats");
-            Long data = stats.getLong("totalHeal");
-            return data;
+            return stats.getLong("totalHeal");
         } catch (JSONException e) {
             return (long) 0;
         }
@@ -210,8 +201,7 @@ public class LoLDataParser {
     public static Long getTrueDamageDealtToChampions(JSONObject participant) {
         try {
             JSONObject stats = participant.getJSONObject("stats");
-            Long data = stats.getLong("trueDamageDealtToChampions");
-            return data;
+            return stats.getLong("trueDamageDealtToChampions");
         } catch (JSONException e) {
             return (long) 0;
         }
@@ -221,8 +211,7 @@ public class LoLDataParser {
     public static Long getMagicDamageDealtToChampions(JSONObject participant) {
         try {
             JSONObject stats = participant.getJSONObject("stats");
-            Long data = stats.getLong("magicDamageDealtToChampions");
-            return data;
+            return stats.getLong("magicDamageDealtToChampions");
         } catch (JSONException e) {
             return (long) 0;
         }
@@ -232,8 +221,7 @@ public class LoLDataParser {
     public static Long getPhysicalDamageDealtToChampions(JSONObject participant) {
         try {
             JSONObject stats = participant.getJSONObject("stats");
-            Long data = stats.getLong("physicalDamageDealtToChampions");
-            return data;
+            return stats.getLong("physicalDamageDealtToChampions");
         } catch (JSONException e) {
             return (long) 0;
         }
@@ -243,8 +231,7 @@ public class LoLDataParser {
     public static Long getTowerKills(JSONObject participant) {
         try {
             JSONObject stats = participant.getJSONObject("stats");
-            Long data = stats.getLong("towerKills");
-            return data;
+            return stats.getLong("towerKills");
         } catch (JSONException e) {
             return (long) 0;
         }
@@ -254,8 +241,7 @@ public class LoLDataParser {
     public static Long getInhibitorKills(JSONObject participant) {
         try {
             JSONObject stats = participant.getJSONObject("stats");
-            Long data = stats.getLong("inhibitorKills");
-            return data;
+            return stats.getLong("inhibitorKills");
         } catch (JSONException e) {
             return (long) 0;
         }

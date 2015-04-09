@@ -8,9 +8,9 @@ package util;
 // - The error (in case of Java errors).
 
 public class LoLResponse {
-    private String jsonObject;
-    private int status;
-    private String error;
+    private final String jsonObject;
+    private final int status;
+    private final String error;
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
 

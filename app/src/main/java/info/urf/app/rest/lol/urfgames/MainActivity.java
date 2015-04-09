@@ -280,7 +280,7 @@ public class MainActivity extends ActionBarActivity {
 
     // Subclass for the custom listView.
 
-    public void onLoadMoreGames() {
+    void onLoadMoreGames() {
         if (canLoadMoreGames)
             loadRecentURFGames();
         else
@@ -430,10 +430,9 @@ public class MainActivity extends ActionBarActivity {
             Long currentDateLong = currentDate.getTime();
             String currentDateStr = currentDateLong.toString();
 
-            return currentDateStr.substring(0, currentDateStr.length() - 3); // We remove the 3 last characters
+            return currentDateStr.substring(0, currentDateStr.length() - 3);
+            // We remove the 3 last characters to convert milliseconds to seconds.
         }
-
-        ;                                                                 // to convert milliseconds to seconds.
     }
 
     // The adapter won't contain itself any data, it will use the global variable "recentGames"
